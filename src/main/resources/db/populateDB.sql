@@ -1,6 +1,9 @@
-DELETE FROM user_roles;
-DELETE FROM meals;
-DELETE FROM users;
+DELETE
+FROM user_roles;
+DELETE
+FROM meals;
+DELETE
+FROM users;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password, calories_per_day)
@@ -12,6 +15,25 @@ INSERT INTO user_roles (role, user_id)
 VALUES ('USER', 100000),
        ('ADMIN', 100001),
        ('USER', 100001);
+
+INSERT INTO restaurant (description)
+VALUES ('restaurant 1'),
+       ('restaurant 2'),
+       ('restaurant 3'),
+       ('restaurant 4'),
+       ('restaurant 5');
+
+INSERT INTO menu (description, prices, restaurant_id)
+VALUES ('meal1 1', 200, 100003),
+       ('meal1 2', 250, 100003),
+       ('meal1 3', 150, 100004),
+       ('meal1 4', 175, 100004),
+       ('meal1 5', 300, 100005);
+
+INSERT INTO vote (date_time, restaurant_id, user_id)
+VALUES (CURRENT_TIMESTAMP, 100003, 100001),
+       (CURRENT_TIMESTAMP, 100004, 100002);
+
 
 INSERT INTO meals (date_time, description, calories, user_id)
 VALUES ('2020-01-30 10:00:00', 'Завтрак', 500, 100000),
