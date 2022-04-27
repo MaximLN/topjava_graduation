@@ -31,8 +31,8 @@ VALUES ('meal1 1', 200, 100003),
        ('meal1 5', 300, 100005);
 
 INSERT INTO vote (date_time, restaurant_id, user_id)
-VALUES (CURRENT_TIMESTAMP, 100003, 100001),
-       (CURRENT_TIMESTAMP, 100004, 100002);
+VALUES (CURRENT_TIMESTAMP, 100003, 100000),
+       (CURRENT_TIMESTAMP, 100004, 100001);
 
 
 INSERT INTO meals (date_time, description, calories, user_id)

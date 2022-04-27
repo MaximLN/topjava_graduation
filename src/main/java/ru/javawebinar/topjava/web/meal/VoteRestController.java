@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.web.restaurant;
+package ru.javawebinar.topjava.web.meal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,35 +6,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import ru.javawebinar.topjava.model.Restaurant;
-import ru.javawebinar.topjava.repository.RestaurantRepository;
+import ru.javawebinar.topjava.model.Vote;
+import ru.javawebinar.topjava.repository.VoteRepository;
+import ru.javawebinar.topjava.web.SecurityUtil;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = RestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestaurantRestController {
+@RequestMapping(value = VoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class VoteRestController {
     private final Logger log = LoggerFactory.getLogger(getClass());
-    static final String REST_URL = "/rest/admin/restaurant";
+    static final String REST_URL = "/rest/profile/vote";
 
     @Autowired
-    private RestaurantRepository repository;
+    private VoteRepository repository;
 
     @GetMapping("/{id}")
-    public Restaurant get(@PathVariable int id) {
-        log.info("get restaurant {}", id);
-        return repository.get(id);
+    public Vote get(@PathVariable int id) {
+        int userId = SecurityUtil.authUserId();
+        return repository.get(id, userId);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
-        repository.delete(id);
+        int userId = SecurityUtil.authUserId();
+        repository.delete(id, userId);
     }
 
     @GetMapping
-    public List<Restaurant> getAll() {
-        return repository.getAll();
+    public List<Vote> getAll() {
+        int userId = SecurityUtil.authUserId();
+        log.info("----------------- " + userId);
+        return repository.getAll(userId);
     }
 
 //    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -53,4 +58,10 @@ public class RestaurantRestController {
 //
 //        return ResponseEntity.created(uriOfNewResource).body(created);
 //    }
+//
+    @GetMapping("/today")
+    public List<Vote> getBetween(){
+        LocalDate todayLocalDate = LocalDate.now();
+        return repository.getResultsOfTodayVote(todayLocalDate);
+    }
 }

@@ -60,8 +60,12 @@ CREATE TABLE vote
     date_time     TIMESTAMP NOT NULL,
     restaurant_id INTEGER   NOT NULL,
     user_id       INTEGER   NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
 );
 
+CREATE UNIQUE INDEX vote_unique_user_datetime_idx
+    ON vote (user_id, date_time);
+
 CREATE UNIQUE INDEX meals_unique_user_datetime_idx
-    ON meals (user_id, date_time)
+    ON meals (user_id, date_time);
