@@ -37,6 +37,12 @@ public class RestaurantRestController {
         return repository.getAll();
     }
 
+    //////
+    @GetMapping("/{id}/with-menu")
+    public Restaurant getWithMenu(@PathVariable int id) {
+        return repository.getWithMenu(id);
+    }
+
 //    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
 //    public void update(@Validated(View.Web.class) @RequestBody Meal meal, @PathVariable int id) {
