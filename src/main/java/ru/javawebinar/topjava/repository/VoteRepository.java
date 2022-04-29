@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface VoteRepository {
     // null if updated meal does not belong to userId
-    Vote save(Vote vote, int userId);
+    Vote save(Vote vote, int userId, int restaurantId);
 
     // false if meal does not belong to userId
     boolean delete(int id, int userId);

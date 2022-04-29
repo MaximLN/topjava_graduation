@@ -1,16 +1,19 @@
 package ru.javawebinar.topjava.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.javawebinar.topjava.View;
+import ru.javawebinar.topjava.to.RestaurantTo;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Objects;
 
 @NamedQueries({
         @NamedQuery(name = Vote.ALL_SORTED, query = "SELECT m FROM Meal m WHERE m.user.id=:userId ORDER BY m.dateTime DESC"),
@@ -43,7 +46,8 @@ public class Vote extends AbstractBaseEntity {
     @NotNull(groups = View.Persist.class)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
@@ -57,7 +61,13 @@ public class Vote extends AbstractBaseEntity {
         super(id);
         this.dateTime = dateTime;
     }
-
+   /////
+    public Vote(Integer id, LocalDateTime dateTime, Restaurant restaurant) {
+        super(id);
+        this.dateTime = dateTime;
+        this.restaurant = restaurant;
+    }
+    /////
     public LocalDateTime getDateTime() {
         return dateTime;
     }

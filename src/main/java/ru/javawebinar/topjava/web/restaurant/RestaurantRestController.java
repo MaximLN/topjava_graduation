@@ -8,8 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.Restaurant;
 import ru.javawebinar.topjava.repository.RestaurantRepository;
-
-import java.util.List;
+import ru.javawebinar.topjava.repository.VoteRepository;
 
 @RestController
 @RequestMapping(value = RestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -19,6 +18,9 @@ public class RestaurantRestController {
 
     @Autowired
     private RestaurantRepository repository;
+
+    @Autowired
+    private VoteRepository voteRepository;
 
     @GetMapping("/{id}")
     public Restaurant get(@PathVariable int id) {
@@ -32,12 +34,11 @@ public class RestaurantRestController {
         repository.delete(id);
     }
 
-    @GetMapping
-    public List<Restaurant> getAll() {
-        return repository.getAll();
-    }
+//    @GetMapping
+//    public List<RestaurantTo> getAll() {
+//        return VoteUtil.getTos(voteRepository.getResultsOfTodayVote(LocalDate.now()));
+//    }
 
-    //////
     @GetMapping("/{id}/with-menu")
     public Restaurant getWithMenu(@PathVariable int id) {
         return repository.getWithMenu(id);

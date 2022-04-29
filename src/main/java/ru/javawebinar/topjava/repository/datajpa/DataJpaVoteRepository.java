@@ -14,19 +14,22 @@ public class DataJpaVoteRepository implements VoteRepository {
 
     private final CrudVoteRepository crudVoteRepository;
     private final CrudUserRepository crudUserRepository;
+    private final CrudRestaurantRepository crudRestaurantRepository;
 
-    public DataJpaVoteRepository(CrudVoteRepository crudVoteRepository, CrudUserRepository crudUserRepository) {
+    public DataJpaVoteRepository(CrudVoteRepository crudVoteRepository, CrudUserRepository crudUserRepository, CrudRestaurantRepository crudRestaurantRepository) {
         this.crudVoteRepository = crudVoteRepository;
         this.crudUserRepository = crudUserRepository;
+        this.crudRestaurantRepository = crudRestaurantRepository;
     }
 
     @Override
     @Transactional
-    public Vote save(Vote vote, int userId) {
+    public Vote save(Vote vote, int userId, int restaurantId) {
         if (!vote.isNew() && get(vote.getId(), userId) == null) {
             return null;
         }
         vote.setUser(crudUserRepository.getOne(userId));
+        vote.setRestaurant(crudRestaurantRepository.getOne(restaurantId));
         return crudVoteRepository.save(vote);
     }
 
