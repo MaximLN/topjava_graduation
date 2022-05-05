@@ -33,6 +33,10 @@ public class Restaurant extends AbstractBaseEntity {
 
     public Restaurant() {
     }
+    public Restaurant(Integer id, String description) {
+        super(id);
+        this.description = description;
+    }
 
     public Restaurant(String description) {
         this.description = description;
