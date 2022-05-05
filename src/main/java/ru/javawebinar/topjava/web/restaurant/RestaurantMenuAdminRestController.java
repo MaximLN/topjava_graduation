@@ -1,8 +1,5 @@
 package ru.javawebinar.topjava.web.restaurant;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,24 +9,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.topjava.View;
 import ru.javawebinar.topjava.model.Menu;
 import ru.javawebinar.topjava.model.Restaurant;
-import ru.javawebinar.topjava.service.MenuService;
-import ru.javawebinar.topjava.service.RestaurantService;
 
 import java.net.URI;
 
 import static ru.javawebinar.topjava.util.validation.ValidationUtil.assureIdConsistent;
 
 @RestController
-@RequestMapping(value = RestaurantMenuRestAdminController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestaurantMenuRestAdminController {
-    private final Logger log = LoggerFactory.getLogger(getClass());
+@RequestMapping(value = RestaurantMenuAdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestaurantMenuAdminRestController extends AbstractRestaurantMenuRestController {
     static final String REST_URL = "/rest/admin/restaurant";
-
-    @Autowired
-    private RestaurantService restaurantService;
-
-    @Autowired
-    private MenuService menuService;
 
     @DeleteMapping("/{restaurantId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
