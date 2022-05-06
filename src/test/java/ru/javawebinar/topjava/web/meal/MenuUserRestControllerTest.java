@@ -2,10 +2,8 @@ package ru.javawebinar.topjava.web.meal;
 
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.javawebinar.topjava.service.RestaurantService;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -15,55 +13,44 @@ import static ru.javawebinar.topjava.RestaurantMenuTestData.*;
 import static ru.javawebinar.topjava.TestUtil.userHttpBasic;
 import static ru.javawebinar.topjava.UserTestData.user1;
 
-class RestaurantMenuUserRestControllerTest extends AbstractControllerTest {
+class MenuUserRestControllerTest extends AbstractControllerTest {
 
     //        private static final String REST_URL = RestaurantMenuUserRestController.REST_URL + '/';
     private static final String REST_URL = "/rest/user/restaurant/";
-
-    @Autowired
-    private RestaurantService restaurantService;
+    private static final String REST_MENU_URL = "/menu/";
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID)
+        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID + REST_MENU_URL + MENU_ID)
                 .with(userHttpBasic(user1)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_MATCHER.contentJson(restaurant1));
+                .andExpect(MENU_MATCHER.contentJson(menu1));
     }
 
     @Test
     void getUnauth() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID + REST_MENU_URL + MENU_ID))
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
     void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND)
+        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID + REST_MENU_URL + NOT_FOUND)
                 .with(userHttpBasic(user1)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
-    void getAll() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL)
+    void getRestaurantWithMenu() throws Exception {
+        restaurantWithMenu.setMenu(menus);
+        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID + "/with-menu")
                 .with(userHttpBasic(user1)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_MATCHER.contentJson(restaurants));
-    }
-
-    @Test
-    void getMenu() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID + "/menu/" + MENU_ID)
-                .with(userHttpBasic(user1)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MENU_MATCHER.contentJson(menu1));
+                .andExpect(RESTAURANT_MATCHER.contentJson(restaurantWithMenu));
     }
 }

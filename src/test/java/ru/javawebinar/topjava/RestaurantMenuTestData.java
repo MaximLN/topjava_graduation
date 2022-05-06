@@ -27,7 +27,10 @@ public class RestaurantMenuTestData {
     public static final Menu menu1 = new Menu(MENU_ID,"meal1 1",200);
     public static final Menu menu2 = new Menu(MENU_ID + 1,"meal1 2",250);
 
+    public static final Restaurant restaurantWithMenu = new Restaurant(RESTAURANT_ID, "restaurant 1");
+
     public static final List<Restaurant> restaurants = List.of(restaurant1, restaurant2, restaurant3, restaurant4, restaurant5);
+    public static final List<Menu> menus = List.of(menu1, menu2);
 
     public static Restaurant getNew() {
         return new Restaurant(null, "New restaurant");
