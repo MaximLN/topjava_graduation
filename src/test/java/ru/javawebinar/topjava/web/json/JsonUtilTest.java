@@ -1,7 +1,7 @@
 package ru.javawebinar.topjava.web.json;
 
 import org.junit.jupiter.api.Test;
-import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.Restaurant;
 import ru.javawebinar.topjava.model.User;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static ru.javawebinar.topjava.MealTestData.*;
+import static ru.javawebinar.topjava.RestaurantMenuTestData.*;
 import static ru.javawebinar.topjava.UserTestData.jsonWithPassword;
 import static ru.javawebinar.topjava.UserTestData.user;
 
@@ -18,18 +18,18 @@ class JsonUtilTest {
 
     @Test
     void readWriteValue() {
-        String json = JsonUtil.writeValue(adminMeal1);
+        String json = JsonUtil.writeValue(restaurant1);
         System.out.println(json);
-        Meal meal = JsonUtil.readValue(json, Meal.class);
-        MEAL_MATCHER.assertMatch(meal, adminMeal1);
+        Restaurant restaurant = JsonUtil.readValue(json, Restaurant.class);
+        RESTAURANT_MATCHER.assertMatch(restaurant, restaurant1);
     }
 
     @Test
     void readWriteValues() {
-        String json = JsonUtil.writeValue(meals);
+        String json = JsonUtil.writeValue(restaurants);
         System.out.println(json);
-        List<Meal> actual = JsonUtil.readValues(json, Meal.class);
-        MEAL_MATCHER.assertMatch(actual, meals);
+        List<Restaurant> actual = JsonUtil.readValues(json, Restaurant.class);
+        RESTAURANT_MATCHER.assertMatch(actual, restaurants);
     }
 
     @Test
