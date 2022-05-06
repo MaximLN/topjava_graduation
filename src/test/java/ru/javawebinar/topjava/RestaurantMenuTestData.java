@@ -12,7 +12,7 @@ public class RestaurantMenuTestData {
     public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menu");
     public static MatcherFactory.Matcher<RestaurantTo> TO_MATCHER = MatcherFactory.usingEqualsComparator(RestaurantTo.class);
 
-    public static final MatcherFactory.Matcher<Menu> MENU_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Menu.class);
+    public static final MatcherFactory.Matcher<Menu> MENU_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Menu.class, "restaurant");
 
     public static final int NOT_FOUND = 10;
     public static final int RESTAURANT_ID = START_SEQ + 10;
@@ -32,11 +32,19 @@ public class RestaurantMenuTestData {
     public static final List<Restaurant> restaurants = List.of(restaurant1, restaurant2, restaurant3, restaurant4, restaurant5);
     public static final List<Menu> menus = List.of(menu1, menu2);
 
-    public static Restaurant getNew() {
+    public static Restaurant getNewRestaurant() {
         return new Restaurant(null, "New restaurant");
     }
 
-    public static Restaurant getUpdated() {
+    public static Restaurant getUpdatedRestaurant() {
         return new Restaurant(RESTAURANT_ID,"Updated restaurant");
+    }
+
+    public static Menu getNewMenu() {
+        return new Menu(null, "New menu", 345);
+    }
+
+    public static Menu getUpdatedMenu() {
+        return new Menu(MENU_ID,"Updated menu", 545);
     }
 }

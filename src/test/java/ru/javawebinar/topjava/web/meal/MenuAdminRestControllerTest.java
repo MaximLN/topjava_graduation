@@ -7,8 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javawebinar.topjava.RestaurantMenuTestData;
-import ru.javawebinar.topjava.model.Restaurant;
-import ru.javawebinar.topjava.service.RestaurantService;
+import ru.javawebinar.topjava.model.Menu;
+import ru.javawebinar.topjava.service.MenuService;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
@@ -16,65 +16,65 @@ import ru.javawebinar.topjava.web.json.JsonUtil;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.javawebinar.topjava.RestaurantMenuTestData.RESTAURANT_ID;
-import static ru.javawebinar.topjava.RestaurantMenuTestData.RESTAURANT_MATCHER;
+import static ru.javawebinar.topjava.RestaurantMenuTestData.*;
 import static ru.javawebinar.topjava.TestUtil.userHttpBasic;
 import static ru.javawebinar.topjava.UserTestData.admin;
 import static ru.javawebinar.topjava.util.exception.ErrorType.VALIDATION_ERROR;
 
-class RestaurantAdminRestControllerTest extends AbstractControllerTest {
+class MenuAdminRestControllerTest extends AbstractControllerTest {
 
     //        private static final String REST_URL = RestaurantMenuUserRestController.REST_URL + '/';
     private static final String REST_URL = "/rest/admin/restaurant/";
+    private static final String REST_MENU_URL = "/menu/";
 
     @Autowired
-    private RestaurantService restaurantService;
+    private MenuService menuService;
 
     @Test
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + RESTAURANT_ID)
+        perform(MockMvcRequestBuilders.delete(REST_URL + RESTAURANT_ID + REST_MENU_URL + MENU_ID)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isNoContent());
-        assertThrows(NotFoundException.class, () -> restaurantService.get(RESTAURANT_ID));
+        assertThrows(NotFoundException.class, () -> menuService.get(MENU_ID, RESTAURANT_ID));
     }
 
     @Test
     void deleteNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + RestaurantMenuTestData.NOT_FOUND)
+        perform(MockMvcRequestBuilders.delete(REST_URL + RESTAURANT_ID + REST_MENU_URL + NOT_FOUND)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
     void update() throws Exception {
-        Restaurant updated = RestaurantMenuTestData.getUpdatedRestaurant();
-        perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT_ID).contentType(MediaType.APPLICATION_JSON)
+        Menu updated = RestaurantMenuTestData.getUpdatedMenu();
+        perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT_ID + REST_MENU_URL + MENU_ID).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(admin))
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
 
-        RESTAURANT_MATCHER.assertMatch(restaurantService.get(RESTAURANT_ID), updated);
+        MENU_MATCHER.assertMatch(menuService.get(MENU_ID, RESTAURANT_ID), updated);
     }
 
     @Test
     void create() throws Exception {
-        Restaurant newRestaurant = RestaurantMenuTestData.getNewRestaurant();
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
+        Menu newMenu = RestaurantMenuTestData.getNewMenu();
+        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + RESTAURANT_ID + REST_MENU_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(admin))
-                .content(JsonUtil.writeValue(newRestaurant)));
+                .content(JsonUtil.writeValue(newMenu)));
 
-        Restaurant created = RESTAURANT_MATCHER.readFromJson(action);
+        Menu created = MENU_MATCHER.readFromJson(action);
         int newId = created.id();
-        newRestaurant.setId(newId);
-        RESTAURANT_MATCHER.assertMatch(created, newRestaurant);
-        RESTAURANT_MATCHER.assertMatch(restaurantService.get(newId), newRestaurant);
+        newMenu.setId(newId);
+        MENU_MATCHER.assertMatch(created, newMenu);
+        MENU_MATCHER.assertMatch(menuService.get(newId, RESTAURANT_ID), newMenu);
     }
 
 
     @Test
     void createInvalid() throws Exception {
-        Restaurant invalid = new Restaurant(null, null);
+        Menu invalid = new Menu(null, null, 0);
         perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid))
@@ -86,8 +86,8 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void updateInvalid() throws Exception {
-        Restaurant invalid = new Restaurant(RESTAURANT_ID, null);
-        perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT_ID)
+        Menu invalid = new Menu(RESTAURANT_ID, null, 0);
+        perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT_ID + REST_MENU_URL + MENU_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid))
                 .with(userHttpBasic(admin)))
