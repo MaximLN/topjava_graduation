@@ -8,40 +8,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.topjava.View;
 import ru.javawebinar.topjava.model.Menu;
-import ru.javawebinar.topjava.model.Restaurant;
 
 import java.net.URI;
 
 import static ru.javawebinar.topjava.util.validation.ValidationUtil.assureIdConsistent;
 
 @RestController
-@RequestMapping(value = RestaurantMenuAdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestaurantMenuAdminRestController extends AbstractRestaurantMenuRestController {
-    static final String REST_URL = "/rest/admin/restaurant";
-
-    @DeleteMapping("/{restaurantId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int restaurantId) {
-        restaurantService.delete(restaurantId);
-    }
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createWithLocation(@Validated(View.Web.class) @RequestBody Restaurant restaurant) {
-        Restaurant created = restaurantService.create(restaurant);
-
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{restaurantId}")
-                .buildAndExpand(created.getId()).toUri();
-
-        return ResponseEntity.created(uriOfNewResource).body(created);
-    }
-
-    @PutMapping(value = "/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Validated(View.Web.class) @RequestBody Restaurant restaurant, @PathVariable int restaurantId) {
-        assureIdConsistent(restaurant, restaurantId);
-        restaurantService.update(restaurant);
-    }
+@RequestMapping(value = AbstractRestaurantMenuRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class MenuAdminRestController extends AbstractRestaurantMenuRestController {
 
     @DeleteMapping("/{restaurantId}/menu/{menuId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

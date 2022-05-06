@@ -7,6 +7,8 @@ import ru.javawebinar.topjava.service.MenuService;
 import ru.javawebinar.topjava.service.RestaurantService;
 
 public abstract class AbstractRestaurantMenuRestController {
+    static final String REST_URL = "/rest/admin/restaurant";
+
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
