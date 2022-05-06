@@ -37,6 +37,6 @@ public class RestaurantMenuTestData {
     }
 
     public static Restaurant getUpdated() {
-        return new Restaurant("Updated restaurant");
+        return new Restaurant(RESTAURANT_ID,"Updated restaurant");
     }
 }
