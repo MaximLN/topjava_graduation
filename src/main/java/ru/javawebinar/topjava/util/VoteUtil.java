@@ -4,7 +4,6 @@ import ru.javawebinar.topjava.model.Restaurant;
 import ru.javawebinar.topjava.model.Vote;
 import ru.javawebinar.topjava.to.RestaurantTo;
 
-import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -18,10 +17,6 @@ public class VoteUtil {
 
     public static List<RestaurantTo> getTos(Collection<Vote> votes) {
         return filterByPredicate(votes, vote -> true);
-    }
-
-    public static List<RestaurantTo> getFilteredTos(Collection<Vote> votes, LocalTime startTime, LocalTime endTime) {
-        return filterByPredicate(votes, vote -> Util.isBetweenHalfOpen(vote.getTime(), startTime, endTime));
     }
 
     public static List<RestaurantTo> filterByPredicate(Collection<Vote> votes, Predicate<Vote> filter) {

@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = VoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteRestController extends AbstractVoteController {
-    static final String REST_URL = "/rest/profile/vote";
+    static final String REST_URL = "/rest/vote";
 
     @GetMapping
     public List<RestaurantTo> getTodayResult() {
@@ -39,13 +39,13 @@ public class VoteRestController extends AbstractVoteController {
         return super.getAll();
     }
 
-    @PutMapping(value = "/{restaurantId}/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}/restaurant/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Validated(View.Web.class) @RequestBody Vote vote, @PathVariable int restaurantId, @PathVariable int id) {
         super.update(vote, restaurantId, id);
     }
 
-    @PostMapping(value = "/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/restaurant/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Vote> createWithLocation(@Validated(View.Web.class) @RequestBody Vote vote, @PathVariable int restaurantId) {
         Vote created = super.create(vote, restaurantId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()

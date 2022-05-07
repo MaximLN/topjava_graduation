@@ -30,6 +30,8 @@ public class DataJpaVoteRepository implements VoteRepository {
         }
         vote.setUser(crudUserRepository.getOne(userId));
         vote.setRestaurant(crudRestaurantRepository.getOne(restaurantId));
+        vote.setDateTime(LocalDateTime.of(vote.getDateTime().getYear(), vote.getDateTime().getMonth(),
+                vote.getDateTime().getDayOfMonth(), 0, 0));
         return crudVoteRepository.save(vote);
     }
 
