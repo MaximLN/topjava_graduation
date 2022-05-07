@@ -2,10 +2,8 @@ package ru.javawebinar.topjava.web.restaurant;
 
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.javawebinar.topjava.service.RestaurantService;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -17,11 +15,7 @@ import static ru.javawebinar.topjava.UserTestData.user1;
 
 class RestaurantUserRestControllerTest extends AbstractControllerTest {
 
-    //        private static final String REST_URL = RestaurantMenuUserRestController.REST_URL + '/';
-    private static final String REST_URL = "/rest/user/restaurant/";
-
-    @Autowired
-    private RestaurantService restaurantService;
+    private static final String REST_URL = RestaurantMenuUserRestController.REST_URL + '/';
 
     @Test
     void get() throws Exception {
