@@ -1,13 +1,10 @@
 package ru.javawebinar.topjava.to;
 
-import org.hibernate.validator.constraints.Range;
 import ru.javawebinar.topjava.HasIdAndEmail;
 import ru.javawebinar.topjava.util.validation.NoHtml;
-import ru.javawebinar.topjava.util.UserUtil;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serial;
 import java.io.Serializable;
@@ -31,19 +28,14 @@ public class UserTo extends BaseTo implements HasIdAndEmail, Serializable {
     @Size(min = 5, max = 32)
     private String password;
 
-    @Range(min = 10, max = 10000)
-    @NotNull
-    private Integer caloriesPerDay = UserUtil.DEFAULT_CALORIES_PER_DAY;
-
     public UserTo() {
     }
 
-    public UserTo(Integer id, String name, String email, String password, int caloriesPerDay) {
+    public UserTo(Integer id, String name, String email, String password) {
         super(id);
         this.name = name;
         this.email = email;
         this.password = password;
-        this.caloriesPerDay = caloriesPerDay;
     }
 
     public String getPassword() {
@@ -71,21 +63,12 @@ public class UserTo extends BaseTo implements HasIdAndEmail, Serializable {
         this.email = email;
     }
 
-    public void setCaloriesPerDay(Integer caloriesPerDay) {
-        this.caloriesPerDay = caloriesPerDay;
-    }
-
-    public Integer getCaloriesPerDay() {
-        return caloriesPerDay;
-    }
-
     @Override
     public String toString() {
         return "UserTo{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", caloriesPerDay='" + caloriesPerDay + '\'' +
                 '}';
     }
 }

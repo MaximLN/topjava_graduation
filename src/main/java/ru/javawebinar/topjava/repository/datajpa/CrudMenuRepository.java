@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
-import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.Menu;
 
 import java.util.List;
@@ -23,5 +22,5 @@ public interface CrudMenuRepository extends JpaRepository<Menu, Integer> {
 
     //
     @Query("SELECT m FROM Menu m JOIN FETCH m.restaurant WHERE m.id = ?1 and m.restaurant.id = ?2")
-    Meal getWithRestaurant(int id, int restaurantId);
+    Menu getWithRestaurant(int id, int restaurantId);
 }
