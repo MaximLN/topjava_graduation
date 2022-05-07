@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.validation.ValidationUtil.checkNotFoundWithId;
+import static ru.javawebinar.topjava.util.validation.ValidationUtil.votingTimeIsOver;
 
 @Service
 public class VoteService {
@@ -35,11 +36,13 @@ public class VoteService {
 
     public void update(Vote vote, int userId, int restaurantId) {
         Assert.notNull(vote, "vote must not be null");
+        votingTimeIsOver(vote.getDateTime());
         checkNotFoundWithId(repository.save(vote, userId, restaurantId), vote.id());
     }
 
     public Vote create(Vote vote, int userId, int restaurantId) {
         Assert.notNull(vote, "vote must not be null");
+        votingTimeIsOver(vote.getDateTime());
         return repository.save(vote, userId, restaurantId);
     }
 

@@ -10,6 +10,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.*;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public class ValidationUtil {
@@ -88,5 +89,11 @@ public class ValidationUtil {
             log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), rootCause.toString());
         }
         return rootCause;
+    }
+
+    public static void votingTimeIsOver(LocalDateTime localDateTime) {
+        if (localDateTime.getHour() >= 11) {
+            throw new NotFoundException("Voting time is over");
+        }
     }
 }
