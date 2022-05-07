@@ -24,8 +24,8 @@ public class RestaurantMenuTestData {
     public static final Restaurant restaurant4 = new Restaurant(RESTAURANT_ID + 3, "restaurant 4");
     public static final Restaurant restaurant5 = new Restaurant(RESTAURANT_ID + 4, "restaurant 5");
 
-    public static final Menu menu1 = new Menu(MENU_ID,"meal1 1",200);
-    public static final Menu menu2 = new Menu(MENU_ID + 1,"meal1 2",250);
+    public static final Menu menu1 = new Menu(MENU_ID,"menu 1",200);
+    public static final Menu menu2 = new Menu(MENU_ID + 1,"menu 2",250);
 
     public static final Restaurant restaurantWithMenu = new Restaurant(RESTAURANT_ID, "restaurant 1");
 

@@ -36,11 +36,11 @@ VALUES ('restaurant 1'),
        ('restaurant 5');
 
 INSERT INTO menu (description, prices, restaurant_id)
-VALUES ('meal1 1', 200, 100010),
-       ('meal1 2', 250, 100010),
-       ('meal1 3', 150, 100014),
-       ('meal1 4', 175, 100011),
-       ('meal1 5', 300, 100012);
+VALUES ('menu 1', 200, 100010),
+       ('menu 2', 250, 100010),
+       ('menu 3', 150, 100014),
+       ('menu 4', 175, 100011),
+       ('menu 5', 300, 100012);
 
 INSERT INTO vote (date_time, restaurant_id, user_id)
 VALUES (CURRENT_TIMESTAMP, 100010, 100000),

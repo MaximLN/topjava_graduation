@@ -40,7 +40,7 @@ public class RestaurantTo extends BaseTo {
 
     @Override
     public String toString() {
-        return "MealTo{" +
+        return "RestaurantTo{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", percentageVoters=" + percentageVoters +

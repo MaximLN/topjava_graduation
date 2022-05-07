@@ -53,16 +53,6 @@ public class DataJpaVoteRepository implements VoteRepository {
     }
 
     @Override
-    public List<Vote> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
-        return crudVoteRepository.getBetweenHalfOpen(startDateTime, endDateTime, userId);
-    }
-
-    @Override
-    public List<Vote> getAllBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        return crudVoteRepository.getAllBetweenHalfOpen(startDateTime, endDateTime);
-    }
-
-    @Override
     public List<Vote> getResultsOfTodayVote(LocalDate todayLocalDate) {
         return crudVoteRepository.getAllBetweenHalfOpen(
                 LocalDateTime.of(todayLocalDate.getYear(),todayLocalDate.getMonth(),todayLocalDate.getDayOfMonth(),
