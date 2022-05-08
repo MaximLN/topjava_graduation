@@ -74,7 +74,7 @@ class MenuAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createInvalid() throws Exception {
-        Menu invalid = new Menu(null, null, 0);
+        Menu invalid = new Menu(null, null, null, 0);
         perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid))
@@ -86,7 +86,7 @@ class MenuAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void updateInvalid() throws Exception {
-        Menu invalid = new Menu(MENU_ID, "", 0);
+        Menu invalid = new Menu(MENU_ID, null, "", 0);
         perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT_ID + REST_MENU_URL + MENU_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid))

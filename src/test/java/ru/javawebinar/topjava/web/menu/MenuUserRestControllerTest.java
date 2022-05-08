@@ -26,7 +26,7 @@ class MenuUserRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MENU_MATCHER.contentJson(menu1));
+                .andExpect(MENU_GET_MATCHER.contentJson(menu1));
     }
 
     @Test

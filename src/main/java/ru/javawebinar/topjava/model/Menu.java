@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.javawebinar.topjava.View;
 import ru.javawebinar.topjava.util.validation.NoHtml;
 
@@ -11,10 +12,16 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "menu")
 public class Menu extends AbstractBaseEntity {
+
+    @Column(name = "date_time", nullable = false)
+    @NotNull
+    @DateTimeFormat
+    private LocalDateTime dateTime;
 
     @Column(name = "description", nullable = false)
     @NotBlank
@@ -37,10 +44,19 @@ public class Menu extends AbstractBaseEntity {
     public Menu() {
     }
 
-    public Menu(Integer id, String description, int prices) {
+    public Menu(Integer id, LocalDateTime dateTime, String description, int prices) {
         super(id);
+        this.dateTime = dateTime;
         this.description = description;
         this.prices = prices;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getDescription() {
