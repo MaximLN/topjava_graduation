@@ -45,10 +45,4 @@ public class ProfileRestController extends AbstractUserController {
     public void update(@Validated(View.Web.class) @RequestBody UserTo userTo, @ApiIgnore @AuthenticationPrincipal AuthorizedUser authUser) {
         super.update(userTo, authUser.getId());
     }
-
-    @GetMapping("/text")
-    public String testUTF() {
-        return "Русский текст";
-    }
-
 }

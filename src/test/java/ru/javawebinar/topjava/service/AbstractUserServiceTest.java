@@ -38,8 +38,8 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
     void delete() {
-        service.delete(USER_ID);
-        assertThrows(NotFoundException.class, () -> service.get(USER_ID));
+        service.delete(USER1_ID);
+        assertThrows(NotFoundException.class, () -> service.get(USER1_ID));
     }
 
     @Test
@@ -68,13 +68,13 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     void update() {
         User updated = getUpdated();
         service.update(updated);
-        USER_MATCHER.assertMatch(service.get(USER_ID), getUpdated());
+        USER_MATCHER.assertMatch(service.get(USER1_ID), getUpdated());
     }
 
     @Test
     void getAll() {
         List<User> all = service.getAll();
-        USER_MATCHER.assertMatch(all, admin, guest, user);
+        USER_MATCHER.assertMatch(all, admin, guest, user1);
     }
 
     @Test
@@ -87,9 +87,9 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
     void enable() {
-        service.enable(USER_ID, false);
-        assertFalse(service.get(USER_ID).isEnabled());
-        service.enable(USER_ID, true);
-        assertTrue(service.get(USER_ID).isEnabled());
+        service.enable(USER1_ID, false);
+        assertFalse(service.get(USER1_ID).isEnabled());
+        service.enable(USER1_ID, true);
+        assertTrue(service.get(USER1_ID).isEnabled());
     }
 }

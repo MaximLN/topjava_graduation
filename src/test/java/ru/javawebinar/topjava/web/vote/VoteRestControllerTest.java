@@ -11,14 +11,17 @@ import ru.javawebinar.topjava.service.VoteService;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
+import java.time.LocalDateTime;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javawebinar.topjava.RestaurantMenuTestData.*;
 import static ru.javawebinar.topjava.TestUtil.userHttpBasic;
-import static ru.javawebinar.topjava.UserTestData.USER_ID;
+import static ru.javawebinar.topjava.UserTestData.USER1_ID;
 import static ru.javawebinar.topjava.UserTestData.user1;
-import static ru.javawebinar.topjava.VoteTestData.*;
+import static ru.javawebinar.topjava.VoteTestData.VOTE_ID;
+import static ru.javawebinar.topjava.VoteTestData.VOTE_MATCHER;
 
 class VoteRestControllerTest extends AbstractControllerTest {
 
@@ -34,8 +37,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(user1)))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(VOTE_MATCHER.contentJson(vote1));
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
     @Test
@@ -59,12 +61,16 @@ class VoteRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(user1))
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
-        VOTE_MATCHER.assertMatch(voteService.get(VOTE_ID, (USER_ID + 1)), updated);
+        VOTE_MATCHER.assertMatch(voteService.get(VOTE_ID, (USER1_ID)), updated);
     }
 
     @Test
     void create() throws Exception {
         Vote newVote = VoteTestData.getNewVote();
+        newVote.setRestaurant(restaurant1);
+        newVote.setDateTime(LocalDateTime.now());
+        newVote.setDateTime(LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
+                LocalDateTime.now().getDayOfMonth(), 0, 0));
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + "restaurant/" + RESTAURANT_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(user1))
@@ -74,6 +80,6 @@ class VoteRestControllerTest extends AbstractControllerTest {
         int newId = created.id();
         newVote.setId(newId);
         VOTE_MATCHER.assertMatch(created, newVote);
-        VOTE_MATCHER.assertMatch(voteService.get(newId, (USER_ID + 1)), newVote);
+        VOTE_MATCHER.assertMatch(voteService.get(newId, (USER1_ID)), newVote);
     }
 }

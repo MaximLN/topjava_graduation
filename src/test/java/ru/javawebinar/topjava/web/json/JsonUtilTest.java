@@ -12,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.javawebinar.topjava.RestaurantMenuTestData.*;
 import static ru.javawebinar.topjava.UserTestData.jsonWithPassword;
-import static ru.javawebinar.topjava.UserTestData.user;
+import static ru.javawebinar.topjava.UserTestData.user1;
 
 class JsonUtilTest {
 
@@ -34,10 +34,10 @@ class JsonUtilTest {
 
     @Test
     void writeOnlyAccess() {
-        String json = JsonUtil.writeValue(user);
+        String json = JsonUtil.writeValue(user1);
         System.out.println(json);
         assertThat(json, not(containsString("password")));
-        String jsonWithPass = jsonWithPassword(user, "newPass");
+        String jsonWithPass = jsonWithPassword(user1, "newPass");
         System.out.println(jsonWithPass);
         User user = JsonUtil.readValue(jsonWithPass, User.class);
         assertEquals(user.getPassword(), "newPass");

@@ -86,7 +86,7 @@ class MenuAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void updateInvalid() throws Exception {
-        Menu invalid = new Menu(RESTAURANT_ID, null, 0);
+        Menu invalid = new Menu(MENU_ID, "", 0);
         perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT_ID + REST_MENU_URL + MENU_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid))

@@ -18,12 +18,6 @@ import java.util.Map;
 public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    private final MessageSourceAccessor messageSourceAccessor;
-
-    public GlobalExceptionHandler(MessageSourceAccessor messageSourceAccessor) {
-        this.messageSourceAccessor = messageSourceAccessor;
-    }
-
     @ExceptionHandler(NoHandlerFoundException.class)
     public ModelAndView wrongRequest(HttpServletRequest req, NoHandlerFoundException e) {
         return logAndGetExceptionView(req, e, false, ErrorType.WRONG_REQUEST, null);
@@ -44,8 +38,8 @@ public class GlobalExceptionHandler {
         Throwable rootCause = ValidationUtil.logAndGetRootCause(log, req, e, logException, errorType);
 
         ModelAndView mav = new ModelAndView("exception",
-                Map.of("exception", rootCause, "message", code != null ? messageSourceAccessor.getMessage(code) : ValidationUtil.getMessage(rootCause),
-                        "typeMessage", messageSourceAccessor.getMessage(errorType.getErrorCode()),
+                Map.of("exception", rootCause, "message", code != null ? code : ValidationUtil.getMessage(rootCause),
+                        "typeMessage", errorType.getErrorCode(),
                         "status", errorType.getStatus()));
         mav.setStatus(errorType.getStatus());
         return mav;

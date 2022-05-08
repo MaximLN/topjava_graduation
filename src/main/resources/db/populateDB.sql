@@ -4,17 +4,17 @@ DELETE
 FROM users;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
-INSERT INTO users (name, email, password, calories_per_day)
-VALUES ('Admin', 'admin@gmail.com', '{noop}admin', 1900),
-       ('User1', 'user1@yandex.ru', '{noop}password', 2005),
-       ('User2', 'user2@yandex.ru', '{noop}password', 2005),
-       ('User3', 'user3@yandex.ru', '{noop}password', 2005),
-       ('User4', 'user4@yandex.ru', '{noop}password', 2005),
-       ('User5', 'user5@yandex.ru', '{noop}password', 2005),
-       ('User6', 'user6@yandex.ru', '{noop}password', 2005),
-       ('User7', 'user7@yandex.ru', '{noop}password', 2005),
-       ('User8', 'user8@yandex.ru', '{noop}password', 2005),
-       ('Guest', 'guest@gmail.com', '{noop}guest', 2000);
+INSERT INTO users (name, email, password)
+VALUES ('Admin', 'admin@gmail.com', '{noop}admin'),
+       ('User1', 'user1@yandex.ru', '{noop}password'),
+       ('User2', 'user2@yandex.ru', '{noop}password'),
+       ('User3', 'user3@yandex.ru', '{noop}password'),
+       ('User4', 'user4@yandex.ru', '{noop}password'),
+       ('User5', 'user5@yandex.ru', '{noop}password'),
+       ('User6', 'user6@yandex.ru', '{noop}password'),
+       ('User7', 'user7@yandex.ru', '{noop}password'),
+       ('User8', 'user8@yandex.ru', '{noop}password'),
+       ('Guest', 'guest@gmail.com', '{noop}guest');
 
 INSERT INTO user_roles (role, user_id)
 VALUES ('USER', 100000),

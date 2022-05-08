@@ -2,19 +2,19 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import ru.javawebinar.topjava.util.validation.ValidationUtil;
 import ru.javawebinar.topjava.util.exception.*;
+import ru.javawebinar.topjava.util.validation.ValidationUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -33,12 +33,6 @@ public class ExceptionInfoHandler {
             "users_unique_email_idx", EXCEPTION_DUPLICATE_EMAIL,
             "vote_unique_user_datetime_idx", EXCEPTION_DUPLICATE_DATETIME);
 
-    private final MessageSourceAccessor messageSourceAccessor;
-
-    public ExceptionInfoHandler(MessageSourceAccessor messageSourceAccessor) {
-        this.messageSourceAccessor = messageSourceAccessor;
-    }
-
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorInfo> handleError(HttpServletRequest req, NotFoundException e) {
         return logAndGetErrorInfo(req, e, false, DATA_NOT_FOUND);
@@ -46,7 +40,7 @@ public class ExceptionInfoHandler {
 
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ErrorInfo> updateRestrictionError(HttpServletRequest req, ApplicationException appEx) {
-        return logAndGetErrorInfo(req, appEx, false, appEx.getType(), messageSourceAccessor.getMessage(appEx.getMsgCode()));
+        return logAndGetErrorInfo(req, appEx, false, appEx.getType(), appEx.getMsgCode());
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -56,7 +50,7 @@ public class ExceptionInfoHandler {
             String lowerCaseMsg = rootMsg.toLowerCase();
             for (Map.Entry<String, String> entry : CONSTRAINS_I18N_MAP.entrySet()) {
                 if (lowerCaseMsg.contains(entry.getKey())) {
-                    return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR, messageSourceAccessor.getMessage(entry.getValue()));
+                    return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR, entry.getValue());
                 }
             }
         }
@@ -66,9 +60,8 @@ public class ExceptionInfoHandler {
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ErrorInfo> bindValidationError(HttpServletRequest req, BindException e) {
         String[] details = e.getBindingResult().getFieldErrors().stream()
-                .map(messageSourceAccessor::getMessage)
+                .map(FieldError::getField)
                 .toArray(String[]::new);
-
         return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR, details);
     }
 
@@ -87,7 +80,7 @@ public class ExceptionInfoHandler {
         Throwable rootCause = ValidationUtil.logAndGetRootCause(log, req, e, logStackTrace, errorType);
         return ResponseEntity.status(errorType.getStatus())
                 .body(new ErrorInfo(req.getRequestURL(), errorType,
-                        messageSourceAccessor.getMessage(errorType.getErrorCode()),
+                        errorType.getErrorCode(),
                         details.length != 0 ? details : new String[]{ValidationUtil.getMessage(rootCause)})
                 );
     }
