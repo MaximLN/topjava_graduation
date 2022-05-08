@@ -5,6 +5,7 @@ import org.springframework.util.Assert;
 import ru.javawebinar.topjava.model.Menu;
 import ru.javawebinar.topjava.repository.MenuRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.validation.ValidationUtil.checkNotFoundWithId;
@@ -27,7 +28,8 @@ public class MenuService {
     }
 
     public List<Menu> getAll(int restaurantId) {
-        return repository.getAll(restaurantId);
+        return repository.getAll(restaurantId, LocalDateTime.of(LocalDateTime.now().getYear(),
+                LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth(), 0, 0));
     }
 
     public void update(Menu menu, int restaurantId) {

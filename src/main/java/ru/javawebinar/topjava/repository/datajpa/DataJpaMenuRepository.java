@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Menu;
 import ru.javawebinar.topjava.repository.MenuRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -41,7 +42,7 @@ public class DataJpaMenuRepository implements MenuRepository {
     }
 
     @Override
-    public List<Menu> getAll(int restaurantId) {
-        return crudMenuRepository.getAll(restaurantId);
+    public List<Menu> getAll(int restaurantId, LocalDateTime todayDate) {
+        return crudMenuRepository.getAll(restaurantId, todayDate);
     }
 }

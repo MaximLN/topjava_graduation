@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Restaurant;
 import ru.javawebinar.topjava.repository.RestaurantRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -39,7 +40,7 @@ public class DataJpaRestaurantRepository implements RestaurantRepository {
     }
 
     @Override
-    public Restaurant getWithMenu(int id) {
-        return crudRestaurantRepository.getWithMenu(id);
+    public Restaurant getWithMenu(int id, LocalDateTime todayDate) {
+        return crudRestaurantRepository.getWithMenu(id, todayDate);
     }
 }

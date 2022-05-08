@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.repository;
 
 import ru.javawebinar.topjava.model.Menu;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MenuRepository {
@@ -14,6 +15,6 @@ public interface MenuRepository {
     // null if menu does not belong to userId
     Menu get(int id, int restaurantId);
 
-    // ORDERED dateTime desc
-    List<Menu> getAll(int restaurantId);
+    // FILTERED dateTime desc
+    List<Menu> getAll(int restaurantId, LocalDateTime todayDate);
 }

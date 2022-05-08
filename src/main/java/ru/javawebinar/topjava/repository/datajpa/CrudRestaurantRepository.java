@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Restaurant;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Transactional(readOnly = true)
@@ -21,6 +22,6 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
     List<Restaurant> getAll();
 
     @EntityGraph(attributePaths = {"menu"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT r FROM Restaurant r WHERE r.id=?1")
-    Restaurant getWithMenu(int id);
+    @Query("SELECT r FROM Restaurant r JOIN r.menu m WHERE r.id=?1 AND m.dateTime>=?2")
+    Restaurant getWithMenu(int id, LocalDateTime todayDate);
 }

@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.repository;
 
 import ru.javawebinar.topjava.model.Restaurant;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface RestaurantRepository {
@@ -16,5 +17,5 @@ public interface RestaurantRepository {
 
     List<Restaurant> getAll();
 
-    Restaurant getWithMenu(int id);
+    Restaurant getWithMenu(int id, LocalDateTime todayDate);
 }
