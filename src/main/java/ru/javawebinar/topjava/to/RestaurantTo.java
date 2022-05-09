@@ -7,12 +7,12 @@ public class RestaurantTo extends BaseTo {
 
     private final String description;
 
-    private final int percentageVoters;
+    private final int numberOfVotes;
 
-    @ConstructorProperties({"description", "percentageVoters"})
+    @ConstructorProperties({"description", "numberOfVotes"})
     public RestaurantTo(String description, int percentageVoters) {
         this.description = description;
-        this.percentageVoters = percentageVoters;
+        this.numberOfVotes = percentageVoters;
     }
 
 
@@ -20,8 +20,8 @@ public class RestaurantTo extends BaseTo {
         return description;
     }
 
-    public int getPercentageVoters() {
-        return percentageVoters;
+    public int getnumberOfVotes() {
+        return numberOfVotes;
     }
 
     @Override
@@ -29,13 +29,13 @@ public class RestaurantTo extends BaseTo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RestaurantTo restaurantTo = (RestaurantTo) o;
-        return percentageVoters == restaurantTo.percentageVoters &&
+        return numberOfVotes == restaurantTo.numberOfVotes &&
                 Objects.equals(description, restaurantTo.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(description, percentageVoters);
+        return Objects.hash(description, numberOfVotes);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class RestaurantTo extends BaseTo {
         return "RestaurantTo{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
-                ", percentageVoters=" + percentageVoters +
+                ", percentageVoters=" + numberOfVotes +
                 '}';
     }
 }
