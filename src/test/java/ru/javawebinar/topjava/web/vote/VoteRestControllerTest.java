@@ -10,6 +10,7 @@ import ru.javawebinar.topjava.model.Vote;
 import ru.javawebinar.topjava.service.VoteService;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
+import ru.javawebinar.topjava.web.restaurant.RestaurantMenuUserRestController;
 
 import java.time.LocalDateTime;
 
@@ -24,9 +25,8 @@ import static ru.javawebinar.topjava.VoteTestData.VOTE_ID;
 import static ru.javawebinar.topjava.VoteTestData.VOTE_MATCHER;
 
 class VoteRestControllerTest extends AbstractControllerTest {
-
-    private static final String REST_URL = "/rest/vote/";
-    private static final String REST_RESTAURANT_URL = "/restaurant/";
+    private static final String REST_URL = VoteRestController.REST_URL + '/';
+    private static final String REST_RESTAURANT_URL = "/restaurants/";
 
     @Autowired
     private VoteService voteService;
@@ -71,7 +71,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
         newVote.setDateTime(LocalDateTime.now());
         newVote.setDateTime(LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
                 LocalDateTime.now().getDayOfMonth(), 0, 0));
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + "restaurant/" + RESTAURANT_ID)
+        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + "restaurants/" + RESTAURANT_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(user1))
                 .content(JsonUtil.writeValue(newVote)));

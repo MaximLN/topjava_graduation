@@ -22,9 +22,7 @@ import static ru.javawebinar.topjava.UserTestData.admin;
 import static ru.javawebinar.topjava.util.exception.ErrorType.VALIDATION_ERROR;
 
 class MenuAdminRestControllerTest extends AbstractControllerTest {
-
-    //        private static final String REST_URL = RestaurantMenuUserRestController.REST_URL + '/';
-    private static final String REST_URL = "/rest/admin/restaurant/";
+    private static final String REST_URL = "/rest/admin/restaurants/";
     private static final String REST_MENU_URL = "/menu/";
 
     @Autowired
