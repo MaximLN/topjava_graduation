@@ -31,7 +31,6 @@ public class VoteUtil {
                 .toList();
     }
 
-    ///LAZY off(
     public static RestaurantTo createTo(Vote vote, int countVote) {
         return new RestaurantTo(vote.getRestaurant().getDescription(), countVote);
     }

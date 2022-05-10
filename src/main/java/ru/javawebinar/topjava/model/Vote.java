@@ -10,18 +10,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@NamedQueries({
-        @NamedQuery(name = Vote.ALL_SORTED, query = "SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.dateTime DESC"),
-        @NamedQuery(name = Vote.DELETE, query = "DELETE FROM Vote v WHERE v.id=:id AND v.user.id=:userId"),
-//        @NamedQuery(name = Meal.UPDATE, query = "UPDATE Meal m SET m.dateTime = :datetime, m.calories= :calories," +
-//                "m.description=:desc where m.id=:id and m.user.id=:userId")
-})
 @Entity
 @Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = "date_time", name = "vote_unique_user_datetime_idx")})
 public class Vote extends AbstractBaseEntity {
-    public static final String ALL_SORTED = "Vote.getAll";
-    public static final String DELETE = "Vote.delete";
-
     @Column(name = "date_time", nullable = false)
     @NotNull
     @DateTimeFormat
@@ -34,8 +25,7 @@ public class Vote extends AbstractBaseEntity {
     @NotNull(groups = View.Persist.class)
     private User user;
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference(value = "restaurant")
