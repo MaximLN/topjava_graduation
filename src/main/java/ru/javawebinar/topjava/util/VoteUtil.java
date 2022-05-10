@@ -5,6 +5,7 @@ import ru.javawebinar.topjava.model.Vote;
 import ru.javawebinar.topjava.to.RestaurantTo;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -28,6 +29,7 @@ public class VoteUtil {
                 .filter(filter)
                 .map(vote -> createTo(vote, Math.toIntExact(countByRestaurant.get(vote.getRestaurant()))))
                 .distinct()
+                .sorted(Comparator.comparingInt(RestaurantTo::getnumberOfVotes).reversed())
                 .toList();
     }
 
