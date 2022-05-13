@@ -22,9 +22,9 @@ import static ru.javawebinar.topjava.TestUtil.userHttpBasic;
 import static ru.javawebinar.topjava.UserTestData.admin;
 import static ru.javawebinar.topjava.util.exception.ErrorType.VALIDATION_ERROR;
 
-class RestaurantAdminRestControllerTest extends AbstractControllerTest {
+class AdminRestaurantControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = RestaurantAdminRestController.REST_URL + '/';
+    private static final String REST_URL = AdminRestaurantController.REST_URL + '/';
 
     @Autowired
     private RestaurantService restaurantService;

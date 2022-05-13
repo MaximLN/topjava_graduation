@@ -14,8 +14,8 @@ import java.net.URI;
 import static ru.javawebinar.topjava.util.validation.ValidationUtil.assureIdConsistent;
 
 @RestController
-@RequestMapping(value = AbstractRestaurantMenuRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestaurantAdminRestController extends AbstractRestaurantMenuRestController {
+@RequestMapping(value = AbstractRestaurantMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class AdminRestaurantController extends AbstractRestaurantMenuController {
 
     @DeleteMapping("/{restaurantId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

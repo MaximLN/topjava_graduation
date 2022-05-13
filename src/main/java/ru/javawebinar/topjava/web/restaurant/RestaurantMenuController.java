@@ -13,9 +13,9 @@ import java.util.List;
 import static ru.javawebinar.topjava.util.validation.ValidationUtil.checkNotFoundWithId;
 
 @RestController
-@RequestMapping(value = RestaurantMenuUserRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestaurantMenuUserRestController extends AbstractRestaurantMenuRestController {
-    static final String REST_URL = "/rest/user/restaurants";
+@RequestMapping(value = RestaurantMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestaurantMenuController extends AbstractRestaurantMenuController {
+    static final String REST_URL = "/rest/restaurants";
 
     @GetMapping
     public List<Restaurant> getAll() {

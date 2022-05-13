@@ -3,7 +3,6 @@ package ru.javawebinar.topjava.web.menu;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javawebinar.topjava.RestaurantMenuTestData;
@@ -11,7 +10,7 @@ import ru.javawebinar.topjava.model.MenuItem;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
-import ru.javawebinar.topjava.web.restaurant.RestaurantMenuUserRestController;
+import ru.javawebinar.topjava.web.restaurant.RestaurantMenuController;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -21,19 +20,19 @@ import static ru.javawebinar.topjava.TestUtil.userHttpBasic;
 import static ru.javawebinar.topjava.UserTestData.admin;
 import static ru.javawebinar.topjava.util.exception.ErrorType.VALIDATION_ERROR;
 
-class MenuItemAdminRestControllerTest extends AbstractControllerTest {
+class AdminMenuItemControllerTest extends AbstractControllerTest {
     private static final String REST_URL = "/rest/admin/restaurants/";
     private static final String REST_MENU_URL = "/menu/";
 
     @Autowired
-    private RestaurantMenuUserRestController restaurantMenuUserRestController;
+    private RestaurantMenuController restaurantMenuController;
 
     @Test
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL + RESTAURANT_ID + REST_MENU_URL + MENU_ID)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isNoContent());
-        assertThrows(NotFoundException.class, () -> restaurantMenuUserRestController.getMenu(RESTAURANT_ID, MENU_ID));
+        assertThrows(NotFoundException.class, () -> restaurantMenuController.getMenu(RESTAURANT_ID, MENU_ID));
     }
 
     @Test
@@ -51,7 +50,7 @@ class MenuItemAdminRestControllerTest extends AbstractControllerTest {
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
 
-        MENU_MATCHER.assertMatch(restaurantMenuUserRestController.getMenu(RESTAURANT_ID, MENU_ID), updated);
+        MENU_MATCHER.assertMatch(restaurantMenuController.getMenu(RESTAURANT_ID, MENU_ID), updated);
     }
 
     @Test
@@ -66,7 +65,7 @@ class MenuItemAdminRestControllerTest extends AbstractControllerTest {
         int newId = created.id();
         newMenuItem.setId(newId);
         MENU_MATCHER.assertMatch(created, newMenuItem);
-        MENU_MATCHER.assertMatch(restaurantMenuUserRestController.getMenu(RESTAURANT_ID, newId), newMenuItem);
+        MENU_MATCHER.assertMatch(restaurantMenuController.getMenu(RESTAURANT_ID, newId), newMenuItem);
     }
 
 

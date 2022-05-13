@@ -16,8 +16,8 @@ import static ru.javawebinar.topjava.util.validation.ValidationUtil.assureIdCons
 import static ru.javawebinar.topjava.util.validation.ValidationUtil.checkNotFoundWithId;
 
 @RestController
-@RequestMapping(value = AbstractRestaurantMenuRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class MenuAdminRestController extends AbstractRestaurantMenuRestController {
+@RequestMapping(value = AbstractRestaurantMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class AdminMenuController extends AbstractRestaurantMenuController {
 
     @DeleteMapping("/{restaurantId}/menu/{menuId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

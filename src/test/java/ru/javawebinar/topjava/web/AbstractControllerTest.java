@@ -20,14 +20,11 @@ import java.util.Locale;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-
 @SpringJUnitWebConfig(locations = {
         "classpath:spring/spring-app.xml",
         "classpath:spring/spring-mvc.xml",
         "classpath:spring/spring-db.xml"
 })
-//@WebAppConfiguration
-//@ExtendWith(SpringExtension.class)
 @Transactional
 public abstract class AbstractControllerTest {
     private static final Locale LOCALE = new Locale("en");
@@ -48,8 +45,6 @@ public abstract class AbstractControllerTest {
 
     @Autowired
     protected MessageSourceAccessor messageSourceAccessor;
-
-
 
     @PostConstruct
     private void postConstruct() {

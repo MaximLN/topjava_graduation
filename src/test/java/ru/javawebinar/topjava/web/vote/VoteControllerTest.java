@@ -10,7 +10,6 @@ import ru.javawebinar.topjava.model.Vote;
 import ru.javawebinar.topjava.service.VoteService;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
-import ru.javawebinar.topjava.web.restaurant.RestaurantMenuUserRestController;
 
 import java.time.LocalDateTime;
 
@@ -24,8 +23,8 @@ import static ru.javawebinar.topjava.UserTestData.user1;
 import static ru.javawebinar.topjava.VoteTestData.VOTE_ID;
 import static ru.javawebinar.topjava.VoteTestData.VOTE_MATCHER;
 
-class VoteRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL = VoteRestController.REST_URL + '/';
+class VoteControllerTest extends AbstractControllerTest {
+    private static final String REST_URL = VoteController.REST_URL + '/';
     private static final String REST_RESTAURANT_URL = "/restaurants/";
 
     @Autowired
