@@ -16,6 +16,7 @@ import ru.javawebinar.topjava.to.RestaurantTo;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.validation.ValidationUtil.assureIdConsistent;
@@ -67,11 +68,13 @@ public class VoteController {
         service.update(vote, userId, restaurantId);
     }
 
-    @PostMapping(value = "/restaurants/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Vote> createWithLocation(@Validated(View.Web.class) @RequestBody Vote vote, @PathVariable int restaurantId) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Vote> createWithLocation(@Validated(View.Web.class) @RequestBody Vote vote) {
+        vote.setDateTime(LocalDate.now().atStartOfDay());
         checkNew(vote);
         int userId = SecurityUtil.authUserId();
-        Vote created = service.create(vote, userId, restaurantId);
+        ////del newVote.getRestaurant().getId()
+        Vote created = service.create(vote, userId, vote.getRestaurant().getId());
         log.info("create {} for user {}", vote, userId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
