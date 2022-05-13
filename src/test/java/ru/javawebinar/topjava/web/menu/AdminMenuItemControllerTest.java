@@ -10,10 +10,11 @@ import ru.javawebinar.topjava.model.MenuItem;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
-import ru.javawebinar.topjava.web.restaurant.RestaurantMenuController;
+import ru.javawebinar.topjava.web.restaurant.AdminMenuController;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javawebinar.topjava.RestaurantMenuTestData.*;
 import static ru.javawebinar.topjava.TestUtil.userHttpBasic;
@@ -22,17 +23,35 @@ import static ru.javawebinar.topjava.util.exception.ErrorType.VALIDATION_ERROR;
 
 class AdminMenuItemControllerTest extends AbstractControllerTest {
     private static final String REST_URL = "/rest/admin/restaurants/";
-    private static final String REST_MENU_URL = "/menu/";
+    private static final String REST_MENU_URL = "/menu-items/";
 
     @Autowired
-    private RestaurantMenuController restaurantMenuController;
+    private AdminMenuController adminMenuController;
+
+    @Test
+    void get() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID + REST_MENU_URL + MENU_ID)
+                .with(userHttpBasic(admin)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MENU_GET_MATCHER.contentJson(menuItem1));
+    }
+
+    @Test
+    void getNotFound() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID + REST_MENU_URL + NOT_FOUND)
+                .with(userHttpBasic(admin)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
 
     @Test
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL + RESTAURANT_ID + REST_MENU_URL + MENU_ID)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isNoContent());
-        assertThrows(NotFoundException.class, () -> restaurantMenuController.getMenu(RESTAURANT_ID, MENU_ID));
+        assertThrows(NotFoundException.class, () -> adminMenuController.getMenu(RESTAURANT_ID, MENU_ID));
     }
 
     @Test
@@ -50,7 +69,7 @@ class AdminMenuItemControllerTest extends AbstractControllerTest {
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
 
-        MENU_MATCHER.assertMatch(restaurantMenuController.getMenu(RESTAURANT_ID, MENU_ID), updated);
+        MENU_MATCHER.assertMatch(adminMenuController.getMenu(RESTAURANT_ID, MENU_ID), updated);
     }
 
     @Test
@@ -65,7 +84,7 @@ class AdminMenuItemControllerTest extends AbstractControllerTest {
         int newId = created.id();
         newMenuItem.setId(newId);
         MENU_MATCHER.assertMatch(created, newMenuItem);
-        MENU_MATCHER.assertMatch(restaurantMenuController.getMenu(RESTAURANT_ID, newId), newMenuItem);
+        MENU_MATCHER.assertMatch(adminMenuController.getMenu(RESTAURANT_ID, newId), newMenuItem);
     }
 
 

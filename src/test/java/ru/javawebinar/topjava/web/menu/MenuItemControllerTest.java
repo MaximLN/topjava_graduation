@@ -15,17 +15,7 @@ import static ru.javawebinar.topjava.UserTestData.user1;
 
 class MenuItemControllerTest extends AbstractControllerTest {
     private static final String REST_URL = "/rest/restaurants/";
-    private static final String REST_MENU_URL = "/menu/";
-
-    @Test
-    void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID + REST_MENU_URL + MENU_ID)
-                .with(userHttpBasic(user1)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MENU_GET_MATCHER.contentJson(menuItem1));
-    }
+    private static final String REST_MENU_URL = "/menu-items/";
 
     @Test
     void getUnauth() throws Exception {
@@ -33,15 +23,7 @@ class MenuItemControllerTest extends AbstractControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
-    @Test
-    void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID + REST_MENU_URL + NOT_FOUND)
-                .with(userHttpBasic(user1)))
-                .andDo(print())
-                .andExpect(status().isUnprocessableEntity());
-    }
-
-    @Test
+   @Test
     void getRestaurantWithMenu() throws Exception {
         restaurantWithMenu.setMenuItems(menuItems);
         perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID + "/with-menu")
