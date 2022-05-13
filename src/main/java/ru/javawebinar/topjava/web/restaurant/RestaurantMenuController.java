@@ -22,6 +22,11 @@ public class RestaurantMenuController extends AbstractRestaurantMenuController {
         return restaurantService.getAll();
     }
 
+    @GetMapping("/with-menu")
+    public List<Restaurant> getAllWithMenu() {
+        return restaurantService.getAllWithMenu();
+    }
+
     @GetMapping("/{restaurantId}")
     public Restaurant get(@PathVariable int restaurantId) {
         log.info("get restaurant {}", restaurantId);
@@ -31,7 +36,6 @@ public class RestaurantMenuController extends AbstractRestaurantMenuController {
     @GetMapping("/{restaurantId}/menu/{menuId}")
     public MenuItem getMenu(@PathVariable int restaurantId, @PathVariable int menuId) {
         log.info("get menu {} for restaurant {}", menuId, restaurantId);
-//        return menuItemService.get(menuId, restaurantId);
         return checkNotFoundWithId(menuItemRepository.get(menuId, restaurantId), menuId);
     }
 

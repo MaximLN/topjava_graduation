@@ -28,7 +28,13 @@ public class RestaurantService {
     }
 
     public Restaurant getWithMenu(int restaurantId) {
-        return checkNotFoundWithId(repository.getWithMenu(restaurantId, LocalDate.now().atStartOfDay()), restaurantId);
+        return checkNotFoundWithId(repository.getWithMenu(restaurantId, LocalDate.now().atStartOfDay(),
+                LocalDate.now().plusDays(1).atStartOfDay()), restaurantId);
+    }
+
+    public List<Restaurant> getAllWithMenu() {
+        return repository.getAllWithMenu(LocalDate.now().atStartOfDay(),
+                LocalDate.now().plusDays(1).atStartOfDay());
     }
 
     public void delete(int id) {

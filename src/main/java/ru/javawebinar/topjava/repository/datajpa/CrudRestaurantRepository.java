@@ -22,6 +22,10 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
     List<Restaurant> getAll();
 
     @EntityGraph(attributePaths = {"menuItems"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT r FROM Restaurant r JOIN r.menuItems m WHERE r.id=?1 AND m.dateTime>=?2")
-    Restaurant getWithMenu(int id, LocalDateTime todayDate);
+    @Query("SELECT r FROM Restaurant r JOIN r.menuItems m WHERE r.id=?1 AND m.dateTime>=?2 AND m.dateTime <?3")
+    Restaurant getWithMenu(int id, LocalDateTime todayDate, LocalDateTime tomorrowDate);
+
+    @EntityGraph(attributePaths = {"menuItems"}, type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT r FROM Restaurant r JOIN r.menuItems m WHERE m.dateTime>=?1 AND m.dateTime <?2")
+    List<Restaurant> getAllWithMenu(LocalDateTime todayDate, LocalDateTime tomorrowDate);
 }
