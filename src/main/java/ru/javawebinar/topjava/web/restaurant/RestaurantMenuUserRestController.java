@@ -5,10 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.javawebinar.topjava.model.Menu;
+import ru.javawebinar.topjava.model.MenuItem;
 import ru.javawebinar.topjava.model.Restaurant;
 
 import java.util.List;
+
+import static ru.javawebinar.topjava.util.validation.ValidationUtil.checkNotFoundWithId;
 
 @RestController
 @RequestMapping(value = RestaurantMenuUserRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -27,9 +29,10 @@ public class RestaurantMenuUserRestController extends AbstractRestaurantMenuRest
     }
 
     @GetMapping("/{restaurantId}/menu/{menuId}")
-    public Menu getMenu(@PathVariable int restaurantId, @PathVariable int menuId) {
+    public MenuItem getMenu(@PathVariable int restaurantId, @PathVariable int menuId) {
         log.info("get menu {} for restaurant {}", menuId, restaurantId);
-        return menuService.get(menuId, restaurantId);
+//        return menuItemService.get(menuId, restaurantId);
+        return checkNotFoundWithId(menuItemRepository.get(menuId, restaurantId), menuId);
     }
 
     @GetMapping("/{restaurantId}/with-menu")

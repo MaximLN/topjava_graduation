@@ -2,6 +2,12 @@ DELETE
 FROM user_roles;
 DELETE
 FROM users;
+DELETE
+FROM vote;
+DELETE
+FROM menu_item;
+DELETE
+FROM restaurant;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password)
@@ -35,12 +41,12 @@ VALUES ('restaurant 1'),
        ('restaurant 4'),
        ('restaurant 5');
 
-INSERT INTO menu (date_time, description, prices, restaurant_id)
-VALUES (CURRENT_TIMESTAMP,'menu 1', 200, 100010),
-       (CURRENT_TIMESTAMP,'menu 2', 250, 100010),
-       (CURRENT_TIMESTAMP,'menu 3', 150, 100014),
-       (CURRENT_TIMESTAMP,'menu 4', 175, 100011),
-       (CURRENT_TIMESTAMP,'menu 5', 300, 100012);
+INSERT INTO menu_item (date_time, description, price, restaurant_id)
+VALUES (CURRENT_TIMESTAMP,'menuItems 1', 200, 100010),
+       (CURRENT_TIMESTAMP,'menuItems 2', 250, 100010),
+       (CURRENT_TIMESTAMP,'menuItems 3', 150, 100014),
+       (CURRENT_TIMESTAMP,'menuItems 4', 175, 100011),
+       (CURRENT_TIMESTAMP,'menuItems 5', 300, 100012);
 
 INSERT INTO vote (date_time, restaurant_id, user_id)
 VALUES (CURRENT_TIMESTAMP, 100010, 100000),

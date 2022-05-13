@@ -25,14 +25,15 @@ public class Restaurant extends AbstractBaseEntity {
     @NoHtml(groups = {View.Web.class})
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
 //    @OrderBy("dateTime DESC")
-    @OnDelete(action = OnDeleteAction.CASCADE) //https://stackoverflow.com/a/44988100/548473
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference
-    private List<Menu> menu;
+    private List<MenuItem> menuItems;
 
     public Restaurant() {
     }
+
     public Restaurant(Integer id, String description) {
         super(id);
         this.description = description;
@@ -50,12 +51,12 @@ public class Restaurant extends AbstractBaseEntity {
         this.description = description;
     }
 
-    public List<Menu> getMenu() {
-        return menu;
+    public List<MenuItem> getMenuItems() {
+        return menuItems;
     }
 
-    public void setMenu(List<Menu> menu) {
-        this.menu = menu;
+    public void setMenuItems(List<MenuItem> menuItems) {
+        this.menuItems = menuItems;
     }
 
     @Override

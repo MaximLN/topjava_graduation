@@ -1,6 +1,6 @@
 package ru.javawebinar.topjava;
 
-import ru.javawebinar.topjava.model.Menu;
+import ru.javawebinar.topjava.model.MenuItem;
 import ru.javawebinar.topjava.model.Restaurant;
 import ru.javawebinar.topjava.to.RestaurantTo;
 
@@ -10,11 +10,11 @@ import java.util.List;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
 public class RestaurantMenuTestData {
-    public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menu");
+    public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menuItem");
     public static MatcherFactory.Matcher<RestaurantTo> TO_MATCHER = MatcherFactory.usingEqualsComparator(RestaurantTo.class);
 
-    public static final MatcherFactory.Matcher<Menu> MENU_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Menu.class, "restaurant");
-    public static final MatcherFactory.Matcher<Menu> MENU_GET_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Menu.class, "restaurant", "dateTime");
+    public static final MatcherFactory.Matcher<MenuItem> MENU_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(MenuItem.class, "restaurant");
+    public static final MatcherFactory.Matcher<MenuItem> MENU_GET_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(MenuItem.class, "restaurant", "dateTime");
 
     public static final int NOT_FOUND = 10;
     public static final int RESTAURANT_ID = START_SEQ + 10;
@@ -29,13 +29,13 @@ public class RestaurantMenuTestData {
     public static final Restaurant restaurant4 = new Restaurant(RESTAURANT_ID + 3, "restaurant 4");
     public static final Restaurant restaurant5 = new Restaurant(RESTAURANT_ID + 4, "restaurant 5");
 
-    public static final Menu menu1 = new Menu(MENU_ID, dayWhenMenuWasCreated, "menu 1", 200);
-    public static final Menu menu2 = new Menu(MENU_ID + 1, dayWhenMenuWasCreated, "menu 2", 250);
+    public static final MenuItem menuItem1 = new MenuItem(MENU_ID, dayWhenMenuWasCreated, "menu 1", 200);
+    public static final MenuItem menuItem2 = new MenuItem(MENU_ID + 1, dayWhenMenuWasCreated, "menu 2", 250);
 
     public static final Restaurant restaurantWithMenu = new Restaurant(RESTAURANT_ID, "restaurant 1");
 
     public static final List<Restaurant> restaurants = List.of(restaurant1, restaurant2, restaurant3, restaurant4, restaurant5);
-    public static final List<Menu> menus = List.of(menu1, menu2);
+    public static final List<MenuItem> menuItems = List.of(menuItem1, menuItem2);
 
     public static Restaurant getNewRestaurant() {
         return new Restaurant(null, "New restaurant");
@@ -45,11 +45,11 @@ public class RestaurantMenuTestData {
         return new Restaurant(RESTAURANT_ID, "Updated restaurant");
     }
 
-    public static Menu getNewMenu() {
-        return new Menu(null, dayWhenMenuWasCreated, "New menu", 345);
+    public static MenuItem getNewMenu() {
+        return new MenuItem(null, dayWhenMenuWasCreated, "New menu", 345);
     }
 
-    public static Menu getUpdatedMenu() {
-        return new Menu(MENU_ID, dayWhenMenuWasCreated, "Updated menu", 545);
+    public static MenuItem getUpdatedMenu() {
+        return new MenuItem(MENU_ID, dayWhenMenuWasCreated, "Updated menu", 545);
     }
 }

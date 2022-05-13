@@ -5,19 +5,19 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
-import ru.javawebinar.topjava.model.Menu;
+import ru.javawebinar.topjava.model.MenuItem;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Transactional(readOnly = true)
-public interface CrudMenuRepository extends JpaRepository<Menu, Integer> {
+public interface CrudMenuItemRepository extends JpaRepository<MenuItem, Integer> {
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Menu m WHERE m.id=:id AND m.restaurant.id=:restaurantId")
+    @Query("DELETE FROM MenuItem m WHERE m.id=:id AND m.restaurant.id=:restaurantId")
     int delete(@Param("id") int id, @Param("restaurantId") int restaurantId);
 
-    @Query("SELECT m FROM Menu m WHERE m.dateTime >= :todayDate AND m.restaurant.id=:restaurantId ORDER BY m.description DESC")
-    List<Menu> getAll(@Param("restaurantId") int restaurantId, @Param("todayDate") LocalDateTime todayDate);
+    @Query("SELECT m FROM MenuItem m WHERE m.dateTime >= :todayDate AND m.restaurant.id=:restaurantId ORDER BY m.description DESC")
+    List<MenuItem> getAll(@Param("restaurantId") int restaurantId, @Param("todayDate") LocalDateTime todayDate);
 }

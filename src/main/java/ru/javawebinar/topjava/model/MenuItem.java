@@ -15,8 +15,8 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "menu")
-public class Menu extends AbstractBaseEntity {
+@Table(name = "menu_item")
+public class MenuItem extends AbstractBaseEntity {
 
     @Column(name = "date_time", nullable = false)
     @NotNull
@@ -29,10 +29,10 @@ public class Menu extends AbstractBaseEntity {
     @NoHtml(groups = {View.Web.class})
     private String description;
 
-    @Column(name = "prices", nullable = false)
+    @Column(name = "price", nullable = false)
     @NotNull
-    @Range(min = 1, max = 15000)
-    private Integer prices;
+    @Range(min = 1, max = 500000)
+    private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
@@ -41,14 +41,14 @@ public class Menu extends AbstractBaseEntity {
     @NotNull(groups = View.Persist.class)
     private Restaurant restaurant;
 
-    public Menu() {
+    public MenuItem() {
     }
 
-    public Menu(Integer id, LocalDateTime dateTime, String description, int prices) {
+    public MenuItem(Integer id, LocalDateTime dateTime, String description, int price) {
         super(id);
         this.dateTime = dateTime;
         this.description = description;
-        this.prices = prices;
+        this.price = price;
     }
 
     public LocalDateTime getDateTime() {
@@ -63,12 +63,12 @@ public class Menu extends AbstractBaseEntity {
         return description;
     }
 
-    public int getPrices() {
-        return prices;
+    public int getPrice() {
+        return price;
     }
 
-    public void setPrices(Integer prices) {
-        this.prices = prices;
+    public void setPrice(Integer prices) {
+        this.price = prices;
     }
 
     public Restaurant getRestaurant() {
@@ -84,7 +84,7 @@ public class Menu extends AbstractBaseEntity {
         return "Menu{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
-                ", prices=" + prices +
+                ", price=" + price +
                 '}';
     }
 }

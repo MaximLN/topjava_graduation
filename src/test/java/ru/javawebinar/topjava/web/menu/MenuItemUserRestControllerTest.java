@@ -13,7 +13,7 @@ import static ru.javawebinar.topjava.RestaurantMenuTestData.*;
 import static ru.javawebinar.topjava.TestUtil.userHttpBasic;
 import static ru.javawebinar.topjava.UserTestData.user1;
 
-class MenuUserRestControllerTest extends AbstractControllerTest {
+class MenuItemUserRestControllerTest extends AbstractControllerTest {
     private static final String REST_URL = "/rest/user/restaurants/";
     private static final String REST_MENU_URL = "/menu/";
 
@@ -24,7 +24,7 @@ class MenuUserRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MENU_GET_MATCHER.contentJson(menu1));
+                .andExpect(MENU_GET_MATCHER.contentJson(menuItem1));
     }
 
     @Test
@@ -43,7 +43,7 @@ class MenuUserRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getRestaurantWithMenu() throws Exception {
-        restaurantWithMenu.setMenu(menus);
+        restaurantWithMenu.setMenuItems(menuItems);
         perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID + "/with-menu")
                 .with(userHttpBasic(user1)))
                 .andExpect(status().isOk())
