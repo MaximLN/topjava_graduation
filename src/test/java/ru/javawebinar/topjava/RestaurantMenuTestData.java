@@ -10,7 +10,7 @@ import java.util.List;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
 public class RestaurantMenuTestData {
-    public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menuItem");
+    public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menuItems");
     public static MatcherFactory.Matcher<RestaurantTo> TO_MATCHER = MatcherFactory.usingEqualsComparator(RestaurantTo.class);
 
     public static final MatcherFactory.Matcher<MenuItem> MENU_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(MenuItem.class, "restaurant");
@@ -29,8 +29,8 @@ public class RestaurantMenuTestData {
     public static final Restaurant restaurant4 = new Restaurant(RESTAURANT_ID + 3, "restaurant 4");
     public static final Restaurant restaurant5 = new Restaurant(RESTAURANT_ID + 4, "restaurant 5");
 
-    public static final MenuItem menuItem1 = new MenuItem(MENU_ID, dayWhenMenuWasCreated, "menu 1", 200);
-    public static final MenuItem menuItem2 = new MenuItem(MENU_ID + 1, dayWhenMenuWasCreated, "menu 2", 250);
+    public static final MenuItem menuItem1 = new MenuItem(MENU_ID, dayWhenMenuWasCreated, "menuItems 1", 200);
+    public static final MenuItem menuItem2 = new MenuItem(MENU_ID + 1, dayWhenMenuWasCreated, "menuItems 2", 250);
 
     public static final Restaurant restaurantWithMenu = new Restaurant(RESTAURANT_ID, "restaurant 1");
 
@@ -46,10 +46,10 @@ public class RestaurantMenuTestData {
     }
 
     public static MenuItem getNewMenu() {
-        return new MenuItem(null, dayWhenMenuWasCreated, "New menu", 345);
+        return new MenuItem(null, dayWhenMenuWasCreated, "New menuItems", 345);
     }
 
     public static MenuItem getUpdatedMenu() {
-        return new MenuItem(MENU_ID, dayWhenMenuWasCreated, "Updated menu", 545);
+        return new MenuItem(MENU_ID, dayWhenMenuWasCreated, "Updated menuItems", 545);
     }
 }
