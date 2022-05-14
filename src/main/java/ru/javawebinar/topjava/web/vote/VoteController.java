@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.javawebinar.topjava.model.Restaurant;
 import ru.javawebinar.topjava.model.Vote;
 import ru.javawebinar.topjava.service.VoteService;
-import ru.javawebinar.topjava.to.RestaurantTo;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
 import java.net.URI;
@@ -31,9 +31,9 @@ public class VoteController {
     private VoteService service;
 
     @GetMapping
-    public List<RestaurantTo> getTodayResult() {
+    public Restaurant getWinner() {
         log.info("getToday result");
-        return service.getTodayResult();
+        return service.getWinner();
     }
 
     @GetMapping("/{id}")

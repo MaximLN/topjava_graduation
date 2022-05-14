@@ -13,7 +13,7 @@ public interface VoteRepository {
 
     List<Vote> getAll(int userId);
 
-    List<Vote> getResultsOfTodayVote(LocalDate todayLocalDate);
+    List<Integer> getResultsOfTodayVote(LocalDate todayLocalDate);
 
     default Vote getWithUser(int id, int userId) {
         throw new UnsupportedOperationException();

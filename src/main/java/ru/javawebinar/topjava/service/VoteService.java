@@ -2,10 +2,10 @@ package ru.javawebinar.topjava.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import ru.javawebinar.topjava.model.Restaurant;
 import ru.javawebinar.topjava.model.Vote;
+import ru.javawebinar.topjava.repository.RestaurantRepository;
 import ru.javawebinar.topjava.repository.VoteRepository;
-import ru.javawebinar.topjava.to.RestaurantTo;
-import ru.javawebinar.topjava.util.VoteUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,9 +18,11 @@ import static ru.javawebinar.topjava.util.validation.ValidationUtil.checkVotingT
 public class VoteService {
 
     private final VoteRepository repository;
+    private final RestaurantRepository restaurantRepository;
 
-    public VoteService(VoteRepository repository) {
+    public VoteService(VoteRepository repository, RestaurantRepository restaurantRepository) {
         this.repository = repository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     public Vote get(int id, int userId) {
@@ -42,7 +44,7 @@ public class VoteService {
         return repository.save(vote, userId);
     }
 
-    public List<RestaurantTo> getTodayResult() {
-        return VoteUtil.getTos(repository.getResultsOfTodayVote(LocalDate.now()));
+    public Restaurant getWinner() {
+        return restaurantRepository.get(repository.getResultsOfTodayVote(LocalDate.now()).get(0));
     }
 }

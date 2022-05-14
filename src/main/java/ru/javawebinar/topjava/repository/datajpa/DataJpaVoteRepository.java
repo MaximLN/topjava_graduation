@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.repository.datajpa;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Vote;
@@ -44,8 +45,8 @@ public class DataJpaVoteRepository implements VoteRepository {
     }
 
     @Override
-    public List<Vote> getResultsOfTodayVote(LocalDate todayLocalDate) {
-        return crudVoteRepository.getAllBetweenHalfOpen(
+    public List <Integer> getResultsOfTodayVote(LocalDate todayLocalDate) {
+        return crudVoteRepository.getWinnerId(PageRequest.of(0,1),
                 LocalDateTime.of(todayLocalDate.getYear(),todayLocalDate.getMonth(),todayLocalDate.getDayOfMonth(),
                         LocalDateTime.MIN.getHour(), LocalDateTime.MIN.getMinute()),
                 LocalDateTime.of(todayLocalDate.getYear(),todayLocalDate.getMonth(),todayLocalDate.getDayOfMonth(),

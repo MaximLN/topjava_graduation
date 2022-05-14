@@ -2,7 +2,6 @@ package ru.javawebinar.topjava;
 
 import ru.javawebinar.topjava.model.MenuItem;
 import ru.javawebinar.topjava.model.Restaurant;
-import ru.javawebinar.topjava.to.RestaurantTo;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,7 +10,6 @@ import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
 public class RestaurantMenuTestData {
     public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menuItems");
-    public static MatcherFactory.Matcher<RestaurantTo> TO_MATCHER = MatcherFactory.usingEqualsComparator(RestaurantTo.class);
 
     public static final MatcherFactory.Matcher<MenuItem> MENU_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(MenuItem.class, "restaurant");
     public static final MatcherFactory.Matcher<MenuItem> MENU_GET_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(MenuItem.class, "restaurant", "dateTime");
