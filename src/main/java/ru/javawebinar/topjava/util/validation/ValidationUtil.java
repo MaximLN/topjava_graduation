@@ -16,6 +16,7 @@ import java.util.Set;
 public class ValidationUtil {
 
     private static final Validator validator;
+    private static final int hourOfTheEndVoteChange = 11;
 
     static {
         //  From Javadoc: implementations are thread-safe and instances are typically cached and reused.
@@ -91,8 +92,8 @@ public class ValidationUtil {
         return rootCause;
     }
 
-    public static void votingTimeIsOver(LocalDateTime localDateTime) {
-        if (localDateTime.getHour() >= 11) {
+    public static void checkVotingTime(LocalDateTime localDateTime) {
+        if (localDateTime.getHour() >= hourOfTheEndVoteChange) {
             throw new NotFoundException("Voting time is over");
         }
     }

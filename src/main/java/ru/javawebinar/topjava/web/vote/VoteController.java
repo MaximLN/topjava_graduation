@@ -9,13 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.javawebinar.topjava.View;
 import ru.javawebinar.topjava.model.Vote;
 import ru.javawebinar.topjava.service.VoteService;
 import ru.javawebinar.topjava.to.RestaurantTo;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.validation.ValidationUtil.assureIdConsistent;
@@ -43,14 +43,6 @@ public class VoteController {
         return service.get(id, userId);
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id) {
-        int userId = SecurityUtil.authUserId();
-        log.info("delete vote {} for user {}", id, userId);
-        service.delete(id, userId);
-    }
-
     @GetMapping("/by-user")
     public List<Vote> getAllVoteByUser() {
         int userId = SecurityUtil.authUserId();
@@ -58,20 +50,21 @@ public class VoteController {
         return service.getAll(userId);
     }
 
-    @PutMapping(value = "/{id}/restaurants/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Validated(View.Web.class) @RequestBody Vote vote, @PathVariable int restaurantId, @PathVariable int id) {
+    public void update(@Validated @RequestBody Vote vote, @PathVariable int id) {
         int userId = SecurityUtil.authUserId();
         log.info("update {} for user {}", vote, userId);
         assureIdConsistent(vote, id);
-        service.update(vote, userId, restaurantId);
+        service.update(vote, userId);
     }
 
-    @PostMapping(value = "/restaurants/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Vote> createWithLocation(@Validated(View.Web.class) @RequestBody Vote vote, @PathVariable int restaurantId) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Vote> createWithLocation(@Validated @RequestBody Vote vote) {
+        vote.setDateTime(LocalDate.now().atStartOfDay());
         checkNew(vote);
         int userId = SecurityUtil.authUserId();
-        Vote created = service.create(vote, userId, restaurantId);
+        Vote created = service.create(vote, userId);
         log.info("create {} for user {}", vote, userId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")

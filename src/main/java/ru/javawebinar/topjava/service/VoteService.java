@@ -8,10 +8,11 @@ import ru.javawebinar.topjava.to.RestaurantTo;
 import ru.javawebinar.topjava.util.VoteUtil;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.validation.ValidationUtil.checkNotFoundWithId;
-import static ru.javawebinar.topjava.util.validation.ValidationUtil.votingTimeIsOver;
+import static ru.javawebinar.topjava.util.validation.ValidationUtil.checkVotingTime;
 
 @Service
 public class VoteService {
@@ -26,24 +27,19 @@ public class VoteService {
         return checkNotFoundWithId(repository.get(id, userId), id);
     }
 
-    public void delete(int id, int userId) {
-        checkNotFoundWithId(repository.delete(id, userId), id);
-    }
-
     public List<Vote> getAll(int userId) {
         return repository.getAll(userId);
     }
 
-    public void update(Vote vote, int userId, int restaurantId) {
+    public void update(Vote vote, int userId) {
         Assert.notNull(vote, "vote must not be null");
-        votingTimeIsOver(vote.getDateTime());
-        checkNotFoundWithId(repository.save(vote, userId, restaurantId), vote.id());
+        checkVotingTime(LocalDateTime.now());
+        checkNotFoundWithId(repository.save(vote, userId), vote.id());
     }
 
-    public Vote create(Vote vote, int userId, int restaurantId) {
+    public Vote create(Vote vote, int userId) {
         Assert.notNull(vote, "vote must not be null");
-        votingTimeIsOver(vote.getDateTime());
-        return repository.save(vote, userId, restaurantId);
+        return repository.save(vote, userId);
     }
 
     public List<RestaurantTo> getTodayResult() {

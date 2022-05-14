@@ -24,27 +24,18 @@ public class DataJpaVoteRepository implements VoteRepository {
 
     @Override
     @Transactional
-    public Vote save(Vote vote, int userId, int restaurantId) {
+    public Vote save(Vote vote, int userId) {
         if (!vote.isNew() && get(vote.getId(), userId) == null) {
             return null;
         }
         vote.setUser(crudUserRepository.getOne(userId));
-        vote.setRestaurant(crudRestaurantRepository.getOne(restaurantId));
-        vote.setDateTime(LocalDateTime.of(vote.getDateTime().getYear(), vote.getDateTime().getMonth(),
-                vote.getDateTime().getDayOfMonth(), 0, 0));
         return crudVoteRepository.save(vote);
     }
 
     @Override
-    public boolean delete(int id, int userId) {
-        return crudVoteRepository.delete(id, userId) != 0;
-    }
-
-    @Override
+    //add .orElse(null);
     public Vote get(int id, int userId) {
-        return crudVoteRepository.findById(id)
-                .filter(vote -> vote.getUser().getId() == userId)
-                .orElse(null);
+        return crudVoteRepository.get(id,userId);
     }
 
     @Override

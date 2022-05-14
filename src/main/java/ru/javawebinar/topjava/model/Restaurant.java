@@ -1,6 +1,8 @@
 package ru.javawebinar.topjava.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.javawebinar.topjava.View;
@@ -14,6 +16,7 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = Restaurant.DELETE, query = "DELETE FROM Restaurant r WHERE r.id=:id"),
 })
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "restaurant", uniqueConstraints = {@UniqueConstraint(columnNames = {"description"})})
 public class Restaurant extends AbstractBaseEntity {
@@ -26,7 +29,6 @@ public class Restaurant extends AbstractBaseEntity {
     private String description;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
-//    @OrderBy("dateTime DESC")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference
     private List<MenuItem> menuItems;
