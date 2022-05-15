@@ -12,6 +12,7 @@ import ru.javawebinar.topjava.model.Restaurant;
 import java.net.URI;
 
 import static ru.javawebinar.topjava.util.validation.ValidationUtil.assureIdConsistent;
+import static ru.javawebinar.topjava.util.validation.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = AbstractRestaurantMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -25,12 +26,11 @@ public class AdminRestaurantController extends AbstractRestaurantMenuController 
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> createWithLocation(@Validated(View.Web.class) @RequestBody Restaurant restaurant) {
+        checkNew(restaurant);
         Restaurant created = restaurantService.create(restaurant);
-
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{restaurantId}")
                 .buildAndExpand(created.getId()).toUri();
-
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
