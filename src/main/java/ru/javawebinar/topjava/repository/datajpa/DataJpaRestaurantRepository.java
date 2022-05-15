@@ -18,7 +18,6 @@ public class DataJpaRestaurantRepository implements RestaurantRepository {
     }
 
     @Override
-    @Transactional
     public Restaurant save(Restaurant restaurant) {
         return crudRestaurantRepository.save(restaurant);
     }

@@ -15,12 +15,10 @@ public class DataJpaVoteRepository implements VoteRepository {
 
     private final CrudVoteRepository crudVoteRepository;
     private final CrudUserRepository crudUserRepository;
-    private final CrudRestaurantRepository crudRestaurantRepository;
 
-    public DataJpaVoteRepository(CrudVoteRepository crudVoteRepository, CrudUserRepository crudUserRepository, CrudRestaurantRepository crudRestaurantRepository) {
+    public DataJpaVoteRepository(CrudVoteRepository crudVoteRepository, CrudUserRepository crudUserRepository) {
         this.crudVoteRepository = crudVoteRepository;
         this.crudUserRepository = crudUserRepository;
-        this.crudRestaurantRepository = crudRestaurantRepository;
     }
 
     @Override
@@ -29,14 +27,14 @@ public class DataJpaVoteRepository implements VoteRepository {
         if (!vote.isNew() && get(vote.getId(), userId) == null) {
             return null;
         }
-        vote.setUser(crudUserRepository.getOne(userId));
+        vote.setUser(crudUserRepository.getById(userId));
         return crudVoteRepository.save(vote);
     }
 
     @Override
     //add .orElse(null);
     public Vote get(int id, int userId) {
-        return crudVoteRepository.get(id,userId);
+        return crudVoteRepository.get(id, userId);
     }
 
     @Override
@@ -45,11 +43,11 @@ public class DataJpaVoteRepository implements VoteRepository {
     }
 
     @Override
-    public List <Integer> getResultsOfTodayVote(LocalDate todayLocalDate) {
-        return crudVoteRepository.getWinnerId(PageRequest.of(0,1),
-                LocalDateTime.of(todayLocalDate.getYear(),todayLocalDate.getMonth(),todayLocalDate.getDayOfMonth(),
+    public List<Integer> getResultsOfTodayVote(LocalDate todayLocalDate) {
+        return crudVoteRepository.getWinnerId(PageRequest.of(0, 1),
+                LocalDateTime.of(todayLocalDate.getYear(), todayLocalDate.getMonth(), todayLocalDate.getDayOfMonth(),
                         LocalDateTime.MIN.getHour(), LocalDateTime.MIN.getMinute()),
-                LocalDateTime.of(todayLocalDate.getYear(),todayLocalDate.getMonth(),todayLocalDate.getDayOfMonth(),
+                LocalDateTime.of(todayLocalDate.getYear(), todayLocalDate.getMonth(), todayLocalDate.getDayOfMonth(),
                         LocalDateTime.MAX.getHour(), LocalDateTime.MAX.getMinute()));
     }
 
