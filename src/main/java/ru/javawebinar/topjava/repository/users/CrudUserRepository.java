@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.repository.datajpa;
+package ru.javawebinar.topjava.repository.users;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;

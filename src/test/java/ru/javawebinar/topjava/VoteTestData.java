@@ -2,6 +2,7 @@ package ru.javawebinar.topjava;
 
 import ru.javawebinar.topjava.model.Vote;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
@@ -14,8 +15,7 @@ public class VoteTestData {
 
     public static LocalDateTime votingTimeIsOver = LocalDateTime.of(LocalDateTime.now().getYear(),
             LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth(), 0, 0);
-    public static LocalDateTime votingIsUnderway = LocalDateTime.of(LocalDateTime.now().getYear(),
-            LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth(), 0, 0);
+    public static LocalDateTime votingIsUnderway = LocalDate.now().atStartOfDay();
 
     public static final Vote vote1 = new Vote(VOTE_ID, votingIsUnderway);
 

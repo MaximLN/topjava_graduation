@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.repository;
+package ru.javawebinar.topjava.repository.restaurants;
 
 import ru.javawebinar.topjava.model.Restaurant;
 

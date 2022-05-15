@@ -1,10 +1,10 @@
-package ru.javawebinar.topjava.repository.datajpa;
+package ru.javawebinar.topjava.repository.votes;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Vote;
-import ru.javawebinar.topjava.repository.VoteRepository;
+import ru.javawebinar.topjava.repository.users.CrudUserRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

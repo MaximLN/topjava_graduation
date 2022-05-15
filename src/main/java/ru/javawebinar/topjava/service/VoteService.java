@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.model.Restaurant;
 import ru.javawebinar.topjava.model.Vote;
-import ru.javawebinar.topjava.repository.RestaurantRepository;
-import ru.javawebinar.topjava.repository.VoteRepository;
+import ru.javawebinar.topjava.repository.restaurants.RestaurantRepository;
+import ru.javawebinar.topjava.repository.votes.VoteRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

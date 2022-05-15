@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.repository;
+package ru.javawebinar.topjava.repository.votes;
 
 import ru.javawebinar.topjava.model.Vote;
 

@@ -3,6 +3,7 @@ package ru.javawebinar.topjava;
 import ru.javawebinar.topjava.model.MenuItem;
 import ru.javawebinar.topjava.model.Restaurant;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,8 +19,7 @@ public class RestaurantMenuTestData {
     public static final int RESTAURANT_ID = START_SEQ + 10;
     public static final int MENU_ID = START_SEQ + 15;
 
-    public static LocalDateTime dayWhenMenuWasCreated = LocalDateTime.of(LocalDateTime.now().getYear(),
-            LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth(), 0, 0);
+    public static LocalDateTime dayWhenMenuWasCreated = LocalDate.now().atStartOfDay();
 
     public static final Restaurant restaurant1 = new Restaurant(RESTAURANT_ID, "restaurant 1");
     public static final Restaurant restaurant2 = new Restaurant(RESTAURANT_ID + 1, "restaurant 2");

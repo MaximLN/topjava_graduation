@@ -3,7 +3,7 @@ package ru.javawebinar.topjava.service;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.model.Restaurant;
-import ru.javawebinar.topjava.repository.RestaurantRepository;
+import ru.javawebinar.topjava.repository.restaurants.RestaurantRepository;
 
 import java.time.LocalDate;
 import java.util.List;

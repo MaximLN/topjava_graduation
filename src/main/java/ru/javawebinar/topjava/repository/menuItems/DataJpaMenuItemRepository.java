@@ -1,9 +1,11 @@
-package ru.javawebinar.topjava.repository.datajpa;
+package ru.javawebinar.topjava.repository.menuItems;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.MenuItem;
-import ru.javawebinar.topjava.repository.MenuItemRepository;
+import ru.javawebinar.topjava.repository.menuItems.MenuItemRepository;
+import ru.javawebinar.topjava.repository.menuItems.CrudMenuItemRepository;
+import ru.javawebinar.topjava.repository.restaurants.CrudRestaurantRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,9 +1,10 @@
-package ru.javawebinar.topjava.repository.datajpa;
+package ru.javawebinar.topjava.repository.users;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.User;
-import ru.javawebinar.topjava.repository.UserRepository;
+import ru.javawebinar.topjava.repository.users.CrudUserRepository;
+import ru.javawebinar.topjava.repository.users.UserRepository;
 
 import java.util.List;
 

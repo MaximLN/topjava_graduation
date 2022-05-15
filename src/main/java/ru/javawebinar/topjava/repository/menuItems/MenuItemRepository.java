@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.repository;
+package ru.javawebinar.topjava.repository.menuItems;
 
 import ru.javawebinar.topjava.model.MenuItem;
 
