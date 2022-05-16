@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "menu_item")
+@Table(name = "menu_item", uniqueConstraints = {@UniqueConstraint(columnNames = {"description"})})
 public class MenuItem extends AbstractBaseEntity {
 
     @Column(name = "date_time", nullable = false)
