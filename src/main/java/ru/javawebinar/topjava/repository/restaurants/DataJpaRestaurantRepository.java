@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.repository.restaurants;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Restaurant;
 
@@ -20,6 +21,7 @@ public class DataJpaRestaurantRepository implements RestaurantRepository {
         return crudRestaurantRepository.save(restaurant);
     }
 
+    @CacheEvict(value = "winner", allEntries = true)
     @Override
     public boolean delete(int id) {
         return crudRestaurantRepository.delete(id) != 0;

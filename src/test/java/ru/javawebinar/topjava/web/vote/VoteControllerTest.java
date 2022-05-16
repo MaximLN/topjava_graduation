@@ -1,35 +1,27 @@
 package ru.javawebinar.topjava.web.vote;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.javawebinar.topjava.VoteTestData;
+import ru.javawebinar.topjava.RestaurantMenuTestData;
 import ru.javawebinar.topjava.model.Vote;
-import ru.javawebinar.topjava.service.VoteService;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.javawebinar.topjava.RestaurantMenuTestData.*;
+import static ru.javawebinar.topjava.RestaurantMenuTestData.RESTAURANT_MATCHER;
+import static ru.javawebinar.topjava.RestaurantMenuTestData.restaurantWithMenu;
 import static ru.javawebinar.topjava.TestUtil.userHttpBasic;
-import static ru.javawebinar.topjava.UserTestData.USER1_ID;
 import static ru.javawebinar.topjava.UserTestData.user1;
 import static ru.javawebinar.topjava.VoteTestData.VOTE_ID;
-import static ru.javawebinar.topjava.VoteTestData.VOTE_MATCHER;
+import static ru.javawebinar.topjava.util.exception.ErrorType.VALIDATION_ERROR;
 
 class VoteControllerTest extends AbstractControllerTest {
     private static final String REST_URL = VoteController.REST_URL + '/';
-    private static final String REST_RESTAURANT_URL = "/restaurants/";
-
-    @Autowired
-    private VoteService voteService;
 
     @Test
     void get() throws Exception {
@@ -48,42 +40,51 @@ class VoteControllerTest extends AbstractControllerTest {
 
     @Test
     void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND)
+        perform(MockMvcRequestBuilders.get(REST_URL + RestaurantMenuTestData.NOT_FOUND)
                 .with(userHttpBasic(user1)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
-//    JSON deserialized without nesting {}
-//    @Test
-//    void update() throws Exception {
-//        Vote updated = VoteTestData.getUpdatedVote();
-//        updated.setRestaurant(restaurant5);
-//        updated.setUser(user1);
-//        System.out.println("----------------");
-//        System.out.println(JsonUtil.writeValue(updated));
-//        perform(MockMvcRequestBuilders.put(REST_URL + VOTE_ID).contentType(MediaType.APPLICATION_JSON)
-//                .with(userHttpBasic(user1))
-//                .content(JsonUtil.writeValue(updated)))
-//                .andExpect(status().isNoContent());
-//        VOTE_MATCHER.assertMatch(voteService.get(VOTE_ID, (USER1_ID)), updated);
-//    }
-//
-//    @Test
-//    void create() throws Exception {
-//        Vote newVote = VoteTestData.getNewVote();
-//        newVote.setRestaurant(restaurant1);
-//        newVote.setDateTime(LocalDate.now().atStartOfDay());
-//        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .with(userHttpBasic(user1))
-//                .content(JsonUtil.writeValue(newVote)));
-//
-//        action.andDo(print());
-//
-//        Vote created = VOTE_MATCHER.readFromJson(action);
-//        int newId = created.id();
-//        newVote.setId(newId);
-//        VOTE_MATCHER.assertMatch(created, newVote);
-//        VOTE_MATCHER.assertMatch(voteService.get(newId, (USER1_ID)), newVote);
-//    }
+
+    @Test
+    void getWinner() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL)
+                .with(userHttpBasic(user1)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(RESTAURANT_MATCHER.contentJson(restaurantWithMenu));
+    }
+
+    @Test
+    void getNotFoundForDate() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + "for-date" + "/" + LocalDate.now().plusDays(1))
+                .with(userHttpBasic(user1)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    void createInvalid() throws Exception {
+        Vote invalid = new Vote(null, null);
+        perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(user1)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR));
+    }
+
+    @Test
+    void updateInvalid() throws Exception {
+        Vote invalid = new Vote(VOTE_ID, null);
+        perform(MockMvcRequestBuilders.put(REST_URL + "/" + VOTE_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(user1)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR));
+    }
 }
