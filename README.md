@@ -13,6 +13,8 @@ If it happens before 11:00, we assume that he has changed his mind.
 If it's after 11:00, then it's too late, the vote can't be changed.
 Every restaurant offers a new menuItems every day.
 
+Technologies and tools used: Java, Maven, Spring MVC, Security, JPA(Hibernate), REST(Jackson), jUnit tests, HSQLDB.
+
 http://localhost:8080/topjava/swagger-ui.html
 
 For testing user functionality, use:
