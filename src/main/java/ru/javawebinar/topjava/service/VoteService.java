@@ -1,5 +1,7 @@
 package ru.javawebinar.topjava.service;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.model.Restaurant;
@@ -33,17 +35,20 @@ public class VoteService {
         return repository.getAll(userId);
     }
 
+    @CacheEvict(value = "winner", allEntries = true)
     public void update(Vote vote, int userId) {
         Assert.notNull(vote, "vote must not be null");
         checkVotingTime(LocalDateTime.now());
         checkNotFoundWithId(repository.save(vote, userId), vote.id());
     }
 
+    @CacheEvict(value = "winner", allEntries = true)
     public Vote create(Vote vote, int userId) {
         Assert.notNull(vote, "vote must not be null");
         return repository.save(vote, userId);
     }
 
+    @Cacheable("winner")
     public Restaurant getWinner() {
         return restaurantRepository.get(repository.getResultsOfTodayVote(LocalDate.now()).get(0));
     }

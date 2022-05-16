@@ -1,7 +1,5 @@
 package ru.javawebinar.topjava.service;
 
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,13 +36,11 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
         return prepareAndSave(user);
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     public void delete(int id) {
         checkModificationAllowed(id);
         checkNotFoundWithId(repository.delete(id), id);
@@ -59,20 +55,16 @@ public class UserService implements UserDetailsService {
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
-    @Cacheable("users")
     public List<User> getAll() {
         return repository.getAll();
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
-//      checkNotFoundWithId : check works only for JDBC, disabled
         checkModificationAllowed(user.id());
         prepareAndSave(user);
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void update(UserTo userTo) {
         checkModificationAllowed(userTo.id());
@@ -80,7 +72,6 @@ public class UserService implements UserDetailsService {
         prepareAndSave(UserUtil.updateFromTo(user, userTo));
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void enable(int id, boolean enabled) {
         checkModificationAllowed(id);

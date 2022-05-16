@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.service;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.model.Restaurant;
@@ -31,7 +32,7 @@ public class RestaurantService {
         return checkNotFoundWithId(repository.getWithMenu(restaurantId, LocalDate.now().atStartOfDay(),
                 LocalDate.now().plusDays(1).atStartOfDay()), restaurantId);
     }
-
+    @Cacheable("restaurants-with-menu")
     public List<Restaurant> getAllWithMenu() {
         return repository.getAllWithMenu(LocalDate.now().atStartOfDay(),
                 LocalDate.now().plusDays(1).atStartOfDay());
