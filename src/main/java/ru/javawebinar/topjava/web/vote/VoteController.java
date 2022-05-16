@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.web.vote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,13 @@ public class VoteController {
         int userId = SecurityUtil.authUserId();
         log.info("get vote {} for user {}", id, userId);
         return service.get(id, userId);
+    }
+
+    @GetMapping("/for-date/{date}")
+    public Vote getForDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        int userId = SecurityUtil.authUserId();
+        log.info("get vote for date {} for user {}", date, userId);
+        return service.getForDate(date, userId);
     }
 
     @GetMapping("/by-user")

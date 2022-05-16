@@ -38,6 +38,11 @@ public class DataJpaVoteRepository implements VoteRepository {
     }
 
     @Override
+    public Vote getForDate(LocalDate date, int userId) {
+        return crudVoteRepository.getForDate(date.atStartOfDay(), userId);
+    }
+
+    @Override
     public List<Vote> getAll(int userId) {
         return crudVoteRepository.getAll(userId);
     }
@@ -50,5 +55,4 @@ public class DataJpaVoteRepository implements VoteRepository {
                 LocalDateTime.of(todayLocalDate.getYear(), todayLocalDate.getMonth(), todayLocalDate.getDayOfMonth(),
                         LocalDateTime.MAX.getHour(), LocalDateTime.MAX.getMinute()));
     }
-
 }

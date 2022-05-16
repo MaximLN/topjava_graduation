@@ -13,8 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static ru.javawebinar.topjava.util.validation.ValidationUtil.checkNotFoundWithId;
-import static ru.javawebinar.topjava.util.validation.ValidationUtil.checkVotingTime;
+import static ru.javawebinar.topjava.util.validation.ValidationUtil.*;
 
 @Service
 public class VoteService {
@@ -29,6 +28,10 @@ public class VoteService {
 
     public Vote get(int id, int userId) {
         return checkNotFoundWithId(repository.get(id, userId), id);
+    }
+
+    public Vote getForDate(LocalDate date, int userId) {
+        return checkNotFound(repository.getForDate(date, userId), "this day");
     }
 
     public List<Vote> getAll(int userId) {
