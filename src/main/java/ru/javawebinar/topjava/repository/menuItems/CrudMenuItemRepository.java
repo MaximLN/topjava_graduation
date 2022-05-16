@@ -18,6 +18,6 @@ public interface CrudMenuItemRepository extends JpaRepository<MenuItem, Integer>
     @Query("DELETE FROM MenuItem m WHERE m.id=:id AND m.restaurant.id=:restaurantId")
     int delete(@Param("id") int id, @Param("restaurantId") int restaurantId);
 
-    @Query("SELECT m FROM MenuItem m WHERE m.dateTime >= :todayDate AND m.restaurant.id=:restaurantId ORDER BY m.price DESC")
-    List<MenuItem> getAll(@Param("restaurantId") int restaurantId, @Param("todayDate") LocalDateTime todayDate);
+    @Query("SELECT m FROM MenuItem m WHERE m.dateTime = :date AND m.restaurant.id=:restaurantId ORDER BY m.price DESC")
+    List<MenuItem> getAll(@Param("restaurantId") int restaurantId, @Param("date") LocalDateTime date);
 }

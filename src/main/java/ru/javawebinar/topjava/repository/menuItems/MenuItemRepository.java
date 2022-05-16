@@ -16,5 +16,5 @@ public interface MenuItemRepository {
     MenuItem get(int id, int restaurantId);
 
     // FILTERED dateTime desc
-    List<MenuItem> getAll(int restaurantId, LocalDateTime todayDate);
+    List<MenuItem> getAll(int restaurantId, LocalDateTime date);
 }

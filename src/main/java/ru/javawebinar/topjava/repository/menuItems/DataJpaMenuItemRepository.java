@@ -45,7 +45,7 @@ public class DataJpaMenuItemRepository implements MenuItemRepository {
     }
 
     @Override
-    public List<MenuItem> getAll(int restaurantId, LocalDateTime todayDate) {
-        return crudMenuItemRepository.getAll(restaurantId, todayDate);
+    public List<MenuItem> getAll(int restaurantId, LocalDateTime date) {
+        return crudMenuItemRepository.getAll(restaurantId, date);
     }
 }
