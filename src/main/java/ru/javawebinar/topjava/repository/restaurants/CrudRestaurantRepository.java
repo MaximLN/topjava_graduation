@@ -18,7 +18,7 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
     @Query("DELETE FROM Restaurant r WHERE r.id=:id")
     int delete(@Param("id") int id);
 
-    @Query("SELECT r FROM Restaurant r")
+    @Query("SELECT r FROM Restaurant r ORDER BY r.description DESC")
     List<Restaurant> getAll();
 
     @EntityGraph(attributePaths = {"menuItems"}, type = EntityGraph.EntityGraphType.LOAD)
@@ -26,6 +26,6 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
     Restaurant getWithMenu(int id, LocalDateTime todayDate, LocalDateTime tomorrowDate);
 
     @EntityGraph(attributePaths = {"menuItems"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT r FROM Restaurant r JOIN r.menuItems m WHERE m.dateTime>=?1 AND m.dateTime <?2")
+    @Query("SELECT r FROM Restaurant r JOIN r.menuItems m WHERE m.dateTime>=?1 AND m.dateTime <?2 ORDER BY r.description DESC")
     List<Restaurant> getAllWithMenu(LocalDateTime todayDate, LocalDateTime tomorrowDate);
 }

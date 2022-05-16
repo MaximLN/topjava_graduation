@@ -32,7 +32,7 @@ public class RestaurantMenuTestData {
 
     public static final Restaurant restaurantWithMenu = new Restaurant(RESTAURANT_ID, "restaurant 1");
 
-    public static final List<Restaurant> restaurants = List.of(restaurant1, restaurant2, restaurant3, restaurant4, restaurant5);
+    public static final List<Restaurant> restaurants = List.of(restaurant5, restaurant4, restaurant3, restaurant2, restaurant1);
     public static final List<MenuItem> menuItems = List.of(menuItem1, menuItem2);
 
     public static Restaurant getNewRestaurant() {
